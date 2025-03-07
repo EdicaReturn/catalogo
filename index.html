@@ -64,6 +64,22 @@
             text-align: left;
         }
 
+        .metodos-pago {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            width: 320px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .metodos-pago img {
+            width: 100px;
+            height: auto;
+            margin: 10px;
+        }
+
         @media (min-width: 1024px) {
             .productos { grid-template-columns: repeat(5, 1fr); }
         }
@@ -117,12 +133,12 @@
         }
 
         function pagar() {
-            alert("Instrucciones de pago: Yape, Plin o Transferencia. Una vez pagado, presiona 'Enviar Pedido'");
+            alert("Instrucciones de pago:\n\nYape: 999-999-999\nPlin: 999-999-999\nBCP: 191-00099999-0-99\nTitular: Tu Nombre Completo\n\nUna vez pagado, presiona 'Enviar Pedido'");
         }
 
         function generarEnlacePedido() {
-            let productosURL = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
-            let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosURL}`;
+            let productosLista = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
+            let urlPedido = `https://shorturl.at/abcdef?pedido=${productosLista}`; // Acortador de URL
             let mensaje = `Hola, quiero hacer un pedido: ${urlPedido}`;
             let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
             window.open(whatsappURL, "_blank");
@@ -146,13 +162,6 @@
                 <button class="btn-mas" onclick="agregarProducto('429', 'https://i.ibb.co/QjDvYNdK/429.png')">+</button>
             </div>
         </div>
-        <div class="producto">
-            <img src="https://i.ibb.co/h18Xt4v3/428.png">
-            <div class="botones">
-                <button class="btn-menos" onclick="quitarProducto('428')">-</button>
-                <button class="btn-mas" onclick="agregarProducto('428', 'https://i.ibb.co/h18Xt4v3/428.png')">+</button>
-            </div>
-        </div>
     </div>
     
     <h2>Carrito de Compras</h2>
@@ -162,6 +171,15 @@
         <p id="totalPrecio">Total a pagar: S/ 0.00</p>
         <button onclick="pagar()">Pagar</button>
         <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
+    </div>
+
+    <h2>Métodos de Pago</h2>
+    <div class="metodos-pago">
+        <p>Escanea el QR o usa los datos:</p>
+        <img src="https://i.ibb.co/YLqz4Lv/yape-qr.png" alt="QR Yape">
+        <img src="https://i.ibb.co/6rDPFsH/plin-qr.png" alt="QR Plin">
+        <p><b>BCP:</b> 191-00099999-0-99</p>
+        <p><b>Titular:</b> Tu Nombre Completo</p>
     </div>
 </body>
 </html>
