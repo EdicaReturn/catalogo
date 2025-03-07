@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Llaveros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe4e1; /* Fondo rosado claro */
+            padding-bottom: 50px;
+        }
+
+        .productos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            gap: 15px;
+            max-width: 90%;
+            margin: auto;
+            padding: 20px;
+        }
+
+        .producto {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .producto img {
+            width: 120%; /* 35% más grande en PC */
+            max-width: 200px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .botones {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .botones button {
+            font-size: 18px;
+            padding: 5px 12px;
+            margin: 0 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .botones .btn-menos { background-color: #ff5252; color: white; }
+        .botones .btn-mas { background-color: #4caf50; color: white; }
+
+        /* 🌟 Mejoras en el carrito */
+        .carrito {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            width: 320px;
+            margin: auto;
+            text-align: left;
+        }
+
+        /* 📱 Diseño Responsive */
+        @media (min-width: 1024px) {
+            .productos { grid-template-columns: repeat(5, 1fr); } /* 5 columnas en PC */
+        }
+
+        @media (max-width: 768px) {
+            .productos { grid-template-columns: repeat(2, 1fr); } /* 2 columnas en móvil */
+            .producto img { width: 110%; max-width: 180px; } /* 15% más grande en móvil */
+        }
+    </style>
+    <script>
+        let carrito = [];
+
+        function agregarProducto(nombre, precio, imagen) {
+            let producto = carrito.find(p => p.nombre === nombre);
+            if (producto) {
+                producto.cantidad++;
+            } else {
+                carrito.push({ nombre, precio, cantidad: 1, imagen });
+            }
+            actualizarCarrito();
+        }
+
+        function quitarProducto(nombre) {
+            let producto = carrito.find(p => p.nombre === nombre);
+            if (producto) {
+                producto.cantidad--;
+                if (producto.cantidad === 0) {
+                    carrito = carrito.filter(p => p.nombre !== nombre);
+                }
+            }
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            let carritoHTML = "";
+            let total = 0;
+            carrito.forEach(p => {
+                total += p.precio * p.cantidad;
+                carritoHTML += `<li>
+                    <img src="${p.imagen}" width="50"> ${p.nombre} - S/${p.precio} x ${p.cantidad} = S/${p.precio * p.cantidad} 
+                    <button onclick=\"quitarProducto('${p.nombre}')\">-</button>
+                    <button onclick=\"agregarProducto('${p.nombre}', ${p.precio}, '${p.imagen}')\">+</button>
+                </li>`;
+            });
+            document.getElementById("listaCarrito").innerHTML = carritoHTML;
+            document.getElementById("total").innerText = `Total: S/${total}`;
+        }
+
+        function generarEnlacePedido() {
+            let productosURL = carrito.map(p => `${encodeURIComponent(p.nombre)}-${p.cantidad}`).join(",");
+            let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosURL}`;
+            let mensaje = `Hola, quiero hacer un pedido. Revísalo aquí: ${urlPedido}`;
+            let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
+            window.open(whatsappURL, "_blank");
+        }
+    </script>
+</head>
+<body>
+    <h1>Catálogo de Llaveros</h1>
+    <div class="productos">
+        <div class="producto">
+            <img src="https://i.ibb.co/LXBPFRbG/430.png">
+            <p>Llavero 430 - S/4.5</p>
+            <div class="botones">
+                <button class="btn-menos" onclick="quitarProducto('Llavero 430')">-</button>
+                <button class="btn-mas" onclick="agregarProducto('Llavero 430', 4.5, 'https://i.ibb.co/LXBPFRbG/430.png')">+</button>
+            </div>
+        </div>
+        <div class="producto">
+            <img src="https://i.ibb.co/QjDvYNdK/429.png">
+            <p>Llavero 429 - S/4.5</p>
+            <div class="botones">
+                <button class="btn-menos" onclick="quitarProducto('Llavero 429')">-</button>
+                <button class="btn-mas" onclick="agregarProducto('Llavero 429', 4.5, 'https://i.ibb.co/QjDvYNdK/429.png')">+</button>
+            </div>
+        </div>
+        <div class="producto">
+            <img src="https://i.ibb.co/h18Xt4v3/428.png">
+            <p>Llavero 428 - S/4.5</p>
+            <div class="botones">
+                <button class="btn-menos" onclick="quitarProducto('Llavero 428')">-</button>
+                <button class="btn-mas" onclick="agregarProducto('Llavero 428', 4.5, 'https://i.ibb.co/h18Xt4v3/428.png')">+</button>
+            </div>
+        </div>
+    </div>
+    
+    <h2>Carrito de Compras</h2>
+    <div class="carrito">
+        <ul id="listaCarrito"></ul>
+        <p id="total">Total: S/0</p>
+        <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
+    </div>
+</body>
+</html>
