@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Llaveros</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .producto {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 150px;
+        }
+        .producto img {
+            width: 100px;
+            height: auto;
+        }
+        .carrito {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #000;
+            display: inline-block;
+            text-align: left;
+            width: 300px;
+        }
+    </style>
+    <script>
+        let carrito = [];
+
+        function agregarProducto(nombre, precio, imagen) {
+            let producto = carrito.find(p => p.nombre === nombre);
+            if (producto) {
+                producto.cantidad++;
+            } else {
+                carrito.push({ nombre, precio, cantidad: 1, imagen });
+            }
+            actualizarCarrito();
+        }
+
+        function quitarProducto(nombre) {
+            let producto = carrito.find(p => p.nombre === nombre);
+            if (producto) {
+                producto.cantidad--;
+                if (producto.cantidad === 0) {
+                    carrito = carrito.filter(p => p.nombre !== nombre);
+                }
+            }
+            actualizarCarrito();
+        }
+
+        function actualizarCarrito() {
+            let carritoHTML = "";
+            let total = 0;
+            carrito.forEach(p => {
+                total += p.precio * p.cantidad;
+                carritoHTML += `<li>
+                    <img src="${p.imagen}" width="50"> ${p.nombre} - S/${p.precio} x ${p.cantidad} = S/${p.precio * p.cantidad} 
+                    <button onclick=\"quitarProducto('${p.nombre}')\">-</button>
+                    <button onclick=\"agregarProducto('${p.nombre}', ${p.precio}, '${p.imagen}')\">+</button>
+                </li>`;
+            });
+            document.getElementById("listaCarrito").innerHTML = carritoHTML;
+            document.getElementById("total").innerText = `Total: S/${total}`;
+        }
+
+        function generarEnlacePedido() {
+            let productosURL = carrito.map(p => `${encodeURIComponent(p.nombre)}-${p.cantidad}`).join(",");
+            let url = `https://tucatalogo.com/pedido.html?productos=${productosURL}`;
+            let mensaje = `Hola, quiero hacer un pedido. Revísalo aquí: ${url}`;
+            let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
+            window.open(whatsappURL, "_blank");
+        }
+    </script>
+</head>
+<body>
+    <h1>Catálogo de Llaveros</h1>
+    <div>
+        <div class="producto">
+            <img src="https://i.ibb.co/LXBPFRbG/430.png">
+            <p>Llavero 430 - S/4.5</p>
+            <button onclick="agregarProducto('Llavero 430', 4.5, 'https://i.ibb.co/LXBPFRbG/430.png')">Agregar</button>
+        </div>
+        <div class="producto">
+            <img src="https://i.ibb.co/QjDvYNdK/429.png">
+            <p>Llavero 429 - S/4.5</p>
+            <button onclick="agregarProducto('Llavero 429', 4.5, 'https://i.ibb.co/QjDvYNdK/429.png')">Agregar</button>
+        </div>
+        <div class="producto">
+            <img src="https://i.ibb.co/h18Xt4v3/428.png">
+            <p>Llavero 428 - S/4.5</p>
+            <button onclick="agregarProducto('Llavero 428', 4.5, 'https://i.ibb.co/h18Xt4v3/428.png')">Agregar</button>
+        </div>
+        <div class="producto">
+            <img src="https://i.ibb.co/DHLvq71Y/427.png">
+            <p>Llavero 427 - S/4.5</p>
+            <button onclick="agregarProducto('Llavero 427', 4.5, 'https://i.ibb.co/DHLvq71Y/427.png')">Agregar</button>
+        </div>
+        <div class="producto">
+            <img src="https://i.ibb.co/rKzd3F7z/426.png">
+            <p>Llavero 426 - S/4.5</p>
+            <button onclick="agregarProducto('Llavero 426', 4.5, 'https://i.ibb.co/rKzd3F7z/426.png')">Agregar</button>
+        </div>
+    </div>
+    
+    <h2>Carrito de Compras</h2>
+    <div class="carrito">
+        <ul id="listaCarrito"></ul>
+        <p id="total">Total: S/0</p>
+        <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
+    </div>
+</body>
+</html>
