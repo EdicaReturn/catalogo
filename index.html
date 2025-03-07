@@ -12,6 +12,14 @@
             padding-bottom: 50px;
         }
 
+        /* 🌟 Portada con GIF */
+        .portada {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+
         .productos {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
@@ -29,8 +37,9 @@
             text-align: center;
         }
 
+        /* 📸 Imágenes más grandes y sin nombres */
         .producto img {
-            width: 120%; /* 35% más grande en PC */
+            width: 120%;
             max-width: 200px;
             height: auto;
             border-radius: 10px;
@@ -54,7 +63,7 @@
         .botones .btn-menos { background-color: #ff5252; color: white; }
         .botones .btn-mas { background-color: #4caf50; color: white; }
 
-        /* 🌟 Mejoras en el carrito */
+        /* 🛒 Carrito con diseño mejorado */
         .carrito {
             background: white;
             padding: 15px;
@@ -76,78 +85,60 @@
         }
     </style>
     <script>
-        let carrito = [];
+        let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-        function agregarProducto(nombre, precio, imagen) {
-            let producto = carrito.find(p => p.nombre === nombre);
+        function agregarProducto(id, imagen) {
+            let producto = carrito.find(p => p.id === id);
             if (producto) {
                 producto.cantidad++;
             } else {
-                carrito.push({ nombre, precio, cantidad: 1, imagen });
+                carrito.push({ id, cantidad: 1, imagen });
             }
+            guardarCarrito();
             actualizarCarrito();
         }
 
-        function quitarProducto(nombre) {
-            let producto = carrito.find(p => p.nombre === nombre);
+        function quitarProducto(id) {
+            let producto = carrito.find(p => p.id === id);
             if (producto) {
                 producto.cantidad--;
                 if (producto.cantidad === 0) {
-                    carrito = carrito.filter(p => p.nombre !== nombre);
+                    carrito = carrito.filter(p => p.id !== id);
                 }
             }
+            guardarCarrito();
             actualizarCarrito();
         }
 
+        function guardarCarrito() {
+            localStorage.setItem('carrito', JSON.stringify(carrito));
+        }
+
         function actualizarCarrito() {
-            let carritoHTML = "";
-            let total = 0;
-            carrito.forEach(p => {
-                total += p.precio * p.cantidad;
-                carritoHTML += `<li>
-                    <img src="${p.imagen}" width="50"> ${p.nombre} - S/${p.precio} x ${p.cantidad} = S/${p.precio * p.cantidad} 
-                    <button onclick=\"quitarProducto('${p.nombre}')\">-</button>
-                    <button onclick=\"agregarProducto('${p.nombre}', ${p.precio}, '${p.imagen}')\">+</button>
-                </li>`;
-            });
-            document.getElementById("listaCarrito").innerHTML = carritoHTML;
-            document.getElementById("total").innerText = `Total: S/${total}`;
+            let lista = carrito.map(p => `<li><img src="${p.imagen}" width="50"> x ${p.cantidad}</li>`).join("");
+            document.getElementById("listaCarrito").innerHTML = lista;
         }
 
         function generarEnlacePedido() {
-            let productosURL = carrito.map(p => `${encodeURIComponent(p.nombre)}-${p.cantidad}`).join(",");
+            let productosURL = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
             let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosURL}`;
-            let mensaje = `Hola, quiero hacer un pedido. Revísalo aquí: ${urlPedido}`;
+            let mensaje = `Hola, quiero hacer un pedido: ${urlPedido}`;
             let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
             window.open(whatsappURL, "_blank");
         }
     </script>
 </head>
 <body>
+    <!-- 📌 Portada con GIF -->
+    <img class="portada" src="https://i.ibb.co/Yk1pKX9/portada.gif" alt="Portada">
+
     <h1>Catálogo de Llaveros</h1>
     <div class="productos">
         <div class="producto">
             <img src="https://i.ibb.co/LXBPFRbG/430.png">
-            <p>Llavero 430 - S/4.5</p>
             <div class="botones">
-                <button class="btn-menos" onclick="quitarProducto('Llavero 430')">-</button>
-                <button class="btn-mas" onclick="agregarProducto('Llavero 430', 4.5, 'https://i.ibb.co/LXBPFRbG/430.png')">+</button>
-            </div>
-        </div>
-        <div class="producto">
-            <img src="https://i.ibb.co/QjDvYNdK/429.png">
-            <p>Llavero 429 - S/4.5</p>
-            <div class="botones">
-                <button class="btn-menos" onclick="quitarProducto('Llavero 429')">-</button>
-                <button class="btn-mas" onclick="agregarProducto('Llavero 429', 4.5, 'https://i.ibb.co/QjDvYNdK/429.png')">+</button>
-            </div>
-        </div>
-        <div class="producto">
-            <img src="https://i.ibb.co/h18Xt4v3/428.png">
-            <p>Llavero 428 - S/4.5</p>
-            <div class="botones">
-                <button class="btn-menos" onclick="quitarProducto('Llavero 428')">-</button>
-                <button class="btn-mas" onclick="agregarProducto('Llavero 428', 4.5, 'https://i.ibb.co/h18Xt4v3/428.png')">+</button>
+                <button class="btn-menos" onclick="quitarProducto('430')">-</button>
+                <button class="btn-mas" onclick="agregarProducto('430', 'https://i.ibb.co/LXBPFRbG/430.png')">+</button>
             </div>
         </div>
     </div>
@@ -155,7 +146,6 @@
     <h2>Carrito de Compras</h2>
     <div class="carrito">
         <ul id="listaCarrito"></ul>
-        <p id="total">Total: S/0</p>
         <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
     </div>
 </body>
