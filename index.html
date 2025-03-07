@@ -12,14 +12,6 @@
             padding-bottom: 50px;
         }
 
-        /* 🎨 Portada */
-        .portada {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
-            margin-bottom: 20px;
-        }
-
         .productos {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
@@ -72,22 +64,6 @@
             text-align: left;
         }
 
-        .metodos-pago {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-            width: 320px;
-            margin: auto;
-            text-align: center;
-        }
-
-        .metodos-pago img {
-            width: 100px;
-            height: auto;
-            margin: 10px;
-        }
-
         @media (min-width: 1024px) {
             .productos { grid-template-columns: repeat(5, 1fr); }
         }
@@ -130,11 +106,7 @@
 
         function actualizarCarrito() {
             let lista = carrito.map(p => 
-                `<li>
-                    <img src="${p.imagen}" width="50"> x ${p.cantidad} 
-                    <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
-                    <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
-                </li>`
+                `<li><img src="${p.imagen}" width="50"> x ${p.cantidad}</li>`
             ).join("");
             let totalProductos = carrito.reduce((sum, p) => sum + p.cantidad, 0);
             let totalPrecio = carrito.reduce((sum, p) => sum + (p.cantidad * precioUnitario), 0);
@@ -144,65 +116,35 @@
             document.getElementById("totalPrecio").innerText = `Total a pagar: S/ ${totalPrecio.toFixed(2)}`;
         }
 
-        function pagar() {
-            alert("Antes de enviar el pedido, realiza el pago:\n\nYape: 999-999-999\nPlin: 999-999-999\nBCP: 191-00099999-0-99\nTitular: Tu Nombre Completo");
-        }
-
         function generarEnlacePedido() {
-            let productosLista = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
-            let urlPedido = `https://bit.ly/tuurl?pedido=${productosLista}`;
-            let mensaje = `Hola, quiero hacer un pedido: ${urlPedido}`;
+            let pedidoId = new Date().getTime(); // Genera un ID único basado en el tiempo
+            localStorage.setItem(`pedido_${pedidoId}`, JSON.stringify(carrito)); // Guarda el pedido en el almacenamiento local
+            
+            let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?id=${pedidoId}`;
+            let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
             let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
             window.open(whatsappURL, "_blank");
         }
     </script>
 </head>
 <body>
-    <img class="portada" src="https://i.ibb.co/Yk1pKX9/portada.gif" alt="Portada">
-
     <h1>Catálogo de Llaveros</h1>
     <div class="productos">
-        <!-- 🔹 Generar 100 productos automáticamente -->
-        <script>
-            let imagenes = [
-                "https://i.ibb.co/LXBPFRbG/430.png",
-                "https://i.ibb.co/QjDvYNdK/429.png",
-                "https://i.ibb.co/h18Xt4v3/428.png",
-                "https://i.ibb.co/DHLvq71Y/427.png",
-                "https://i.ibb.co/rKzd3F7z/426.png"
-            ];
-            
-            for (let i = 1; i <= 100; i++) {
-                let img = imagenes[i % 5];
-                document.write(`
-                    <div class="producto">
-                        <img src="${img}">
-                        <div class="botones">
-                            <button class="btn-menos" onclick="quitarProducto('${i}')">-</button>
-                            <button class="btn-mas" onclick="agregarProducto('${i}', '${img}')">+</button>
-                        </div>
-                    </div>
-                `);
-            }
-        </script>
+        <div class="producto">
+            <img src="https://i.ibb.co/LXBPFRbG/430.png">
+            <div class="botones">
+                <button class="btn-menos" onclick="quitarProducto('430')">-</button>
+                <button class="btn-mas" onclick="agregarProducto('430', 'https://i.ibb.co/LXBPFRbG/430.png')">+</button>
+            </div>
+        </div>
     </div>
-
+    
     <h2>Carrito de Compras</h2>
     <div class="carrito">
         <ul id="listaCarrito"></ul>
         <p id="totalProductos">Total de llaveros: 0</p>
         <p id="totalPrecio">Total a pagar: S/ 0.00</p>
-        <button onclick="pagar()">Pagar</button>
         <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
-    </div>
-
-    <h2>Métodos de Pago</h2>
-    <div class="metodos-pago">
-        <p>Escanea el QR o usa los datos:</p>
-        <img src="https://i.ibb.co/YLqz4Lv/yape-qr.png" alt="QR Yape">
-        <img src="https://i.ibb.co/6rDPFsH/plin-qr.png" alt="QR Plin">
-        <p><b>BCP:</b> 191-00099999-0-99</p>
-        <p><b>Titular:</b> Tu Nombre Completo</p>
     </div>
 </body>
 </html>
