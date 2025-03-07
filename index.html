@@ -12,14 +12,6 @@
             padding-bottom: 50px;
         }
 
-        /* 🌟 Portada con GIF */
-        .portada {
-            width: 100%;
-            max-height: 200px;
-            object-fit: cover;
-            margin-bottom: 20px;
-        }
-
         .productos {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
@@ -37,7 +29,6 @@
             text-align: center;
         }
 
-        /* 📸 Imágenes más grandes y sin nombres */
         .producto img {
             width: 120%;
             max-width: 200px;
@@ -63,7 +54,6 @@
         .botones .btn-menos { background-color: #ff5252; color: white; }
         .botones .btn-mas { background-color: #4caf50; color: white; }
 
-        /* 🛒 Carrito con diseño mejorado */
         .carrito {
             background: white;
             padding: 15px;
@@ -74,18 +64,18 @@
             text-align: left;
         }
 
-        /* 📱 Diseño Responsive */
         @media (min-width: 1024px) {
-            .productos { grid-template-columns: repeat(5, 1fr); } /* 5 columnas en PC */
+            .productos { grid-template-columns: repeat(5, 1fr); }
         }
 
         @media (max-width: 768px) {
-            .productos { grid-template-columns: repeat(2, 1fr); } /* 2 columnas en móvil */
-            .producto img { width: 110%; max-width: 180px; } /* 15% más grande en móvil */
+            .productos { grid-template-columns: repeat(2, 1fr); }
+            .producto img { width: 110%; max-width: 180px; }
         }
     </style>
     <script>
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+        let precioUnitario = 4.5; // Precio de cada llavero
 
         function agregarProducto(id, imagen) {
             let producto = carrito.find(p => p.id === id);
@@ -115,8 +105,19 @@
         }
 
         function actualizarCarrito() {
-            let lista = carrito.map(p => `<li><img src="${p.imagen}" width="50"> x ${p.cantidad}</li>`).join("");
+            let lista = carrito.map(p => 
+                `<li><img src="${p.imagen}" width="50"> x ${p.cantidad}</li>`
+            ).join("");
+            let totalProductos = carrito.reduce((sum, p) => sum + p.cantidad, 0);
+            let totalPrecio = carrito.reduce((sum, p) => sum + (p.cantidad * precioUnitario), 0);
+            
             document.getElementById("listaCarrito").innerHTML = lista;
+            document.getElementById("totalProductos").innerText = `Total de llaveros: ${totalProductos}`;
+            document.getElementById("totalPrecio").innerText = `Total a pagar: S/ ${totalPrecio.toFixed(2)}`;
+        }
+
+        function pagar() {
+            alert("Instrucciones de pago: Yape, Plin o Transferencia. Una vez pagado, presiona 'Enviar Pedido'");
         }
 
         function generarEnlacePedido() {
@@ -129,12 +130,8 @@
     </script>
 </head>
 <body>
-    <!-- 📌 Portada con GIF -->
-    <img class="portada" src="https://i.ibb.co/Yk1pKX9/portada.gif" alt="Portada">
-
     <h1>Catálogo de Llaveros</h1>
     <div class="productos">
-        <!-- 🔹 Agregamos los 5 productos -->
         <div class="producto">
             <img src="https://i.ibb.co/LXBPFRbG/430.png">
             <div class="botones">
@@ -156,25 +153,14 @@
                 <button class="btn-mas" onclick="agregarProducto('428', 'https://i.ibb.co/h18Xt4v3/428.png')">+</button>
             </div>
         </div>
-        <div class="producto">
-            <img src="https://i.ibb.co/DHLvq71Y/427.png">
-            <div class="botones">
-                <button class="btn-menos" onclick="quitarProducto('427')">-</button>
-                <button class="btn-mas" onclick="agregarProducto('427', 'https://i.ibb.co/DHLvq71Y/427.png')">+</button>
-            </div>
-        </div>
-        <div class="producto">
-            <img src="https://i.ibb.co/rKzd3F7z/426.png">
-            <div class="botones">
-                <button class="btn-menos" onclick="quitarProducto('426')">-</button>
-                <button class="btn-mas" onclick="agregarProducto('426', 'https://i.ibb.co/rKzd3F7z/426.png')">+</button>
-            </div>
-        </div>
     </div>
     
     <h2>Carrito de Compras</h2>
     <div class="carrito">
         <ul id="listaCarrito"></ul>
+        <p id="totalProductos">Total de llaveros: 0</p>
+        <p id="totalPrecio">Total a pagar: S/ 0.00</p>
+        <button onclick="pagar()">Pagar</button>
         <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
     </div>
 </body>
