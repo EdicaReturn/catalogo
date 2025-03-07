@@ -3,60 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedido del Cliente</title>
+    <title>Detalles del Pedido</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .producto { display: flex; align-items: center; justify-content: center; margin: 10px; }
-        .producto img { width: 80px; height: 80px; margin-right: 10px; }
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8f9fa;
+            padding-bottom: 50px;
+        }
+
+        .pedido-container {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+            margin: auto;
+            text-align: left;
+        }
+
+        .pedido-container ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pedido-container li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .pedido-container img {
+            width: 80px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .mensaje-error {
+            color: red;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        #totalPedido {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h2>Detalles del Pedido</h2>
-    <div id="pedido"></div>
+    <h1>Detalles del Pedido</h1>
+    <div class="pedido-container">
+        <ul id="listaPedido"></ul>
+        <p id="totalPedido">Total a pagar: S/ 0.00</p>
+    </div>
 
     <script>
-        // Lista de imágenes de los llaveros
-        const imagenes = {
-            "Llavero 430": "https://i.ibb.co/LXBPFRbG/430.png",
-            "Llavero 429": "https://i.ibb.co/QjDvYNdK/429.png",
-            "Llavero 428": "https://i.ibb.co/h18Xt4v3/428.png",
-            "Llavero 427": "https://i.ibb.co/DHLvq71Y/427.png",
-            "Llavero 426": "https://i.ibb.co/rKzd3F7z/426.png"
-        };
-
-        function obtenerProductosDesdeURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const productos = urlParams.get('productos');  
-            if (!productos) return [];
-
-            return productos.split(',').map(p => {
-                let [nombre, cantidad] = p.split('-');
-                return { nombre, cantidad };
-            });
+        function obtenerParametrosURL() {
+            const params = new URLSearchParams(window.location.search);
+            return params.get("id");
         }
 
-        function mostrarPedido() {
-            let pedidoDiv = document.getElementById("pedido");
-            let productos = obtenerProductosDesdeURL();
+        function cargarPedido() {
+            let pedidoId = obtenerParametrosURL();
+            let pedido = JSON.parse(localStorage.getItem(`pedido_${pedidoId}`));
 
-            if (productos.length === 0) {
-                pedidoDiv.innerHTML = "<p>No hay productos en este pedido.</p>";
+            if (!pedido || pedido.length === 0) {
+                document.getElementById("listaPedido").innerHTML = "<p class='mensaje-error'>❌ No hay productos en este pedido.</p>";
                 return;
             }
 
-            productos.forEach(p => {
-                let imgSrc = imagenes[p.nombre] || "https://via.placeholder.com/80"; // Imagen por defecto si no existe
-                let item = `
-                    <div class="producto">
-                        <img src="${imgSrc}" alt="${p.nombre}">
-                        <p>${p.nombre} - Cantidad: ${p.cantidad}</p>
-                    </div>
-                `;
-                pedidoDiv.innerHTML += item;
+            let total = 0;
+            let listaHTML = "";
+            pedido.forEach(p => {
+                total += p.cantidad * 4.5;
+                listaHTML += `
+                    <li>
+                        <img src="${p.imagen}">
+                        ${p.cantidad} unidades
+                    </li>`;
             });
+
+            document.getElementById("listaPedido").innerHTML = listaHTML;
+            document.getElementById("totalPedido").innerText = `Total a pagar: S/ ${total.toFixed(2)}`;
         }
 
-        window.onload = mostrarPedido;
+        window.onload = cargarPedido;
     </script>
 </body>
 </html>
