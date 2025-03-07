@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido del Cliente</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        .producto { display: flex; align-items: center; justify-content: center; margin: 10px; }
+        .producto img { width: 80px; height: 80px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <h2>Detalles del Pedido</h2>
+    <div id="pedido"></div>
+
+    <script>
+        // Lista de imágenes de los llaveros
+        const imagenes = {
+            "Llavero 430": "https://i.ibb.co/LXBPFRbG/430.png",
+            "Llavero 429": "https://i.ibb.co/QjDvYNdK/429.png",
+            "Llavero 428": "https://i.ibb.co/h18Xt4v3/428.png",
+            "Llavero 427": "https://i.ibb.co/DHLvq71Y/427.png",
+            "Llavero 426": "https://i.ibb.co/rKzd3F7z/426.png"
+        };
+
+        function obtenerProductosDesdeURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productos = urlParams.get('productos');  
+            if (!productos) return [];
+
+            return productos.split(',').map(p => {
+                let [nombre, cantidad] = p.split('-');
+                return { nombre, cantidad };
+            });
+        }
+
+        function mostrarPedido() {
+            let pedidoDiv = document.getElementById("pedido");
+            let productos = obtenerProductosDesdeURL();
+
+            if (productos.length === 0) {
+                pedidoDiv.innerHTML = "<p>No hay productos en este pedido.</p>";
+                return;
+            }
+
+            productos.forEach(p => {
+                let imgSrc = imagenes[p.nombre] || "https://via.placeholder.com/80"; // Imagen por defecto si no existe
+                let item = `
+                    <div class="producto">
+                        <img src="${imgSrc}" alt="${p.nombre}">
+                        <p>${p.nombre} - Cantidad: ${p.cantidad}</p>
+                    </div>
+                `;
+                pedidoDiv.innerHTML += item;
+            });
+        }
+
+        window.onload = mostrarPedido;
+    </script>
+</body>
+</html>
