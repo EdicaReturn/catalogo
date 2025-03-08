@@ -6,11 +6,30 @@
     <title>Catálogo de Llaveros</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f8f9fa;
-            padding-bottom: 50px;
-        }
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-image: url('https://i.ibb.co/album/kawaii-background.jpg'); /* Fondo kawaii */
+    background-size: cover;
+    background-position: center;
+    padding-bottom: 50px;
+}
+
+/* Ajuste del tamaño de imágenes */
+.producto img {
+    width: 120%;
+    max-width: 270px; /* Aumentado un 50% en PC */
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .producto img {
+        width: 120%;
+        max-width: 216px; /* Aumentado un 20% en móviles */
+    }
+}
+
 
         .productos {
             display: grid;
@@ -111,17 +130,21 @@
         }
 
         function actualizarCarrito() {
-            let lista = carrito.map(p => 
-                `<li>
-                    <img src="${p.imagen}" width="80"> x ${p.cantidad} 
-                    <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
-                    <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
-                </li>`
-            ).join("");
-            
-            document.getElementById("listaCarrito").innerHTML = lista;
-            calcularTotal();
-        }
+    let lista = carrito.map(p => 
+        `<li>
+            <img src="${p.imagen}" width="80"> x ${p.cantidad} 
+            <div class="botones">
+                <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
+                <span class="cantidad">${p.cantidad}</span>
+                <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
+            </div>
+        </li>`
+    ).join("");
+
+    document.getElementById("listaCarrito").innerHTML = lista;
+    calcularTotal();
+}
+
         
         function calcularTotal() {
             let total = carrito.reduce((sum, item) => sum + (item.cantidad * precioUnitario), 0);
@@ -279,11 +302,13 @@
     </div>
 
     <h2>Carrito de Compras</h2>
-    <div class="carrito">
-        <ul id="listaCarrito"></ul>
-        <p id="totalCarrito"></p>
-        <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
-    </div>
+<div class="carrito">
+    <ul id="listaCarrito"></ul>
+    <p id="totalCarrito"></p>
+    <button onclick="pagarPedido()">🛒 Pagar</button>
+    <button onclick="generarEnlacePedido()">📲 Enviar Pedido por WhatsApp</button>
+</div>
+
 
     <h2>Métodos de Pago</h2>
     <div class="metodos-pago">
