@@ -73,17 +73,21 @@
         function obtenerPedidoDesdeURL() {
     let params = new URLSearchParams(window.location.search);
     let productosTexto = params.get("productos");
-    if (!productosTexto) return null;
+
+    if (!productosTexto || productosTexto.trim() === "") {
+        return [];
+    }
 
     return productosTexto.split(",").map(p => {
         let partes = p.split("-");
         return {
             id: partes[0],
-            cantidad: parseInt(partes[1]),
-            imagen: decodeURIComponent(partes[2])
+            cantidad: parseInt(partes[1]) || 0,
+            imagen: decodeURIComponent(partes[2] || "")
         };
-    });
+    }).filter(p => p.cantidad > 0);
 }
+
 
 
         function cargarPedido() {
