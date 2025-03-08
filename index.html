@@ -152,10 +152,20 @@
         }
 
         function generarEnlacePedido() {
-            let pedidoId = new Date().getTime();
-            localStorage.setItem(`pedido_${pedidoId}`, JSON.stringify(carrito));
-            
-            let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?id=${pedidoId}`;
+            function generarEnlacePedido() {
+    if (carrito.length === 0) {
+        alert("❌ No tienes productos en el carrito.");
+        return;
+    }
+
+    let productosEnlace = carrito.map(p => `${p.id}-${p.cantidad}-${encodeURIComponent(p.imagen)}`).join(",");
+    let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosEnlace}`;
+
+    let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
+    let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
+    window.open(whatsappURL, "_blank");
+}
+
             let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
             let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
             window.open(whatsappURL, "_blank");
@@ -292,9 +302,11 @@
                     <div class="producto">
                         <img src="${img}">
                         <div class="botones">
-                            <button class="btn-menos" onclick="quitarProducto('${i}')">-</button>
-                            <button class="btn-mas" onclick="agregarProducto('${i}', '${img}')">+</button>
-                        </div>
+    <button class="btn-menos" onclick="quitarProducto('${i}')">-</button>
+    <span id="cantidad-${i}" style="margin: 0 10px; font-size: 18px;">0</span>
+    <button class="btn-mas" onclick="agregarProducto('${i}', '${img}')">+</button>
+</div>
+
                     </div>
                 `);
             }
@@ -305,8 +317,9 @@
 <div class="carrito">
     <ul id="listaCarrito"></ul>
     <p id="totalCarrito"></p>
-    <button onclick="pagarPedido()">🛒 Pagar</button>
-    <button onclick="generarEnlacePedido()">📲 Enviar Pedido por WhatsApp</button>
+    <button onclick="mostrarPago()">🛒 Pagar</button>
+<button onclick="generarEnlacePedido()">📩 Enviar Pedido por WhatsApp</button>
+
 </div>
 
 
