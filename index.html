@@ -8,20 +8,13 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-color: #ffe4e1;
+            background-color: #f8f9fa;
             padding-bottom: 50px;
-        }
-
-        .portada {
-            width: 100%;
-            max-height: 250px;
-            object-fit: cover;
-            margin-bottom: 20px;
         }
 
         .productos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
             max-width: 90%;
             margin: auto;
@@ -37,8 +30,8 @@
         }
 
         .producto img {
-            width: 120%;
-            max-width: 200px;
+            width: 100%;
+            max-width: 180px;
             height: auto;
             border-radius: 10px;
         }
@@ -58,8 +51,8 @@
             border-radius: 8px;
         }
 
-        .botones .btn-menos { background-color: #ff5252; color: white; }
-        .botones .btn-mas { background-color: #4caf50; color: white; }
+        .btn-menos { background-color: #ff5252; color: white; }
+        .btn-mas { background-color: #4caf50; color: white; }
 
         .carrito {
             background: white;
@@ -82,18 +75,9 @@
         }
 
         .metodos-pago img {
-            width: 100px;
+            width: 120px;
             height: auto;
             margin: 10px;
-        }
-
-        @media (min-width: 1024px) {
-            .productos { grid-template-columns: repeat(5, 1fr); }
-        }
-
-        @media (max-width: 768px) {
-            .productos { grid-template-columns: repeat(2, 1fr); }
-            .producto img { width: 110%; max-width: 180px; }
         }
     </style>
     <script>
@@ -135,16 +119,8 @@
                     <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
                 </li>`
             ).join("");
-            let totalProductos = carrito.reduce((sum, p) => sum + p.cantidad, 0);
-            let totalPrecio = carrito.reduce((sum, p) => sum + (p.cantidad * precioUnitario), 0);
             
             document.getElementById("listaCarrito").innerHTML = lista;
-            document.getElementById("totalProductos").innerText = `Total de llaveros: ${totalProductos}`;
-            document.getElementById("totalPrecio").innerText = `Total a pagar: S/ ${totalPrecio.toFixed(2)}`;
-        }
-
-        function pagar() {
-            alert("Antes de enviar el pedido, realiza el pago:\n\nYape: 999-999-999\nPlin: 999-999-999\nBCP: 191-00099999-0-99\nTitular: Tu Nombre Completo");
         }
 
         function generarEnlacePedido() {
@@ -159,21 +135,21 @@
     </script>
 </head>
 <body>
-    <img class="portada" src="https://i.ibb.co/Yk1pKX9/portada.gif" alt="Portada">
-
     <h1>Catálogo de Llaveros</h1>
     <div class="productos">
         <script>
             let imagenes = [
-                "https://i.ibb.co/LXBPFRbG/430.png",
-                "https://i.ibb.co/QjDvYNdK/429.png",
-                "https://i.ibb.co/h18Xt4v3/428.png",
-                "https://i.ibb.co/DHLvq71Y/427.png",
-                "https://i.ibb.co/rKzd3F7z/426.png"
+                "https://i.ibb.co/qYqKrChC/435.png",
+                "https://i.ibb.co/G4g0XCdQ/434.png",
+                "https://i.ibb.co/B5t0Kqgh/433.png",
+                "https://i.ibb.co/ymkNQHVZ/432.png",
+                "https://i.ibb.co/ycwYk8PX/431.png",
+                "https://i.ibb.co/FbgCpbCf/430.png",
+                "https://i.ibb.co/zjhVLTD/429.png"
             ];
             
-            for (let i = 1; i <= 100; i++) {
-                let img = imagenes[i % 5];
+            for (let i = 0; i < imagenes.length; i++) {
+                let img = imagenes[i];
                 document.write(`
                     <div class="producto">
                         <img src="${img}">
@@ -190,19 +166,16 @@
     <h2>Carrito de Compras</h2>
     <div class="carrito">
         <ul id="listaCarrito"></ul>
-        <p id="totalProductos">Total de llaveros: 0</p>
-        <p id="totalPrecio">Total a pagar: S/ 0.00</p>
-        <button onclick="pagar()">Pagar</button>
         <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
     </div>
 
     <h2>Métodos de Pago</h2>
     <div class="metodos-pago">
         <p>Escanea el QR o usa los datos:</p>
-        <img src="https://i.ibb.co/YLqz4Lv/yape-qr.png" alt="QR Yape">
-        <img src="https://i.ibb.co/6rDPFsH/plin-qr.png" alt="QR Plin">
-        <p><b>BCP:</b> 191-00099999-0-99</p>
-        <p><b>Titular:</b> Tu Nombre Completo</p>
+        <img src="https://i.ibb.co/VpCJyYTX/Whats-App-Image-2025-03-03-at-8-16-46-AM.jpg" alt="QR Yape">
+        <img src="https://i.ibb.co/4R6YXzzp/Whats-App-Image-2025-03-03-at-8-25-03-AM.jpg" alt="QR Plin">
+        <p><b>BCP:</b> 38096987352082</p>
+        <p><b>Titular:</b> George Edibaldo Gavilan de la Borda</p>
     </div>
 </body>
 </html>
