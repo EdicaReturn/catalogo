@@ -8,11 +8,42 @@
         body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-image: url('https://i.ibb.co/album/kawaii-background.jpg'); /* Fondo kawaii */
-    background-size: cover;
-    background-position: center;
+    background: linear-gradient(to bottom, #ffdde1, #ee9ca7); /* Fondo kawaii sin imagen */
     padding-bottom: 50px;
 }
+
+/* Ajuste del tamaño de imágenes */
+.producto img {
+    width: 120%;
+    max-width: 270px; /* Aumentado un 50% en PC */
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .producto img {
+        width: 120%;
+        max-width: 216px; /* Aumentado un 20% en móviles */
+    }
+}
+
+/* Diseño de carrito en columnas */
+.carrito ul {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columnas en PC */
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .carrito ul {
+        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móviles */
+    }
+}
+
 
 /* Ajuste del tamaño de imágenes */
 .producto img {
@@ -135,21 +166,32 @@
             <img src="${p.imagen}" width="80"> x ${p.cantidad} 
             <div class="botones">
                 <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
-                <span class="cantidad">${p.cantidad}</span>
+                <span id="cantidad-${p.id}" class="cantidad">${p.cantidad}</span>
                 <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
             </div>
         </li>`
     ).join("");
 
     document.getElementById("listaCarrito").innerHTML = lista;
+    carrito.forEach(p => {
+        let cantidadElemento = document.getElementById(`cantidad-${p.id}`);
+        if (cantidadElemento) {
+            cantidadElemento.textContent = p.cantidad;
+        }
+    });
+
     calcularTotal();
 }
+
 
         
         function calcularTotal() {
             let total = carrito.reduce((sum, item) => sum + (item.cantidad * precioUnitario), 0);
             document.getElementById("totalCarrito").textContent = `Total: S/. ${total.toFixed(2)}`;
         }
+function mostrarPago() {
+    alert("💰 Métodos de Pago:\n\n✅ Yape: 960525152\n✅ Plin: 960525152\n✅ BCP: 38096987352082\n\nTitular: George Edibaldo Gavilan de la Borda");
+}
 
         function generarEnlacePedido() {
             function generarEnlacePedido() {
