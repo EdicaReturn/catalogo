@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,9 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
-            background-image: url('https://i.pinimg.com/originals/81/b8/b5/81b8b548b111559814467d358172900c.jpg'); /* Reemplaza con tu imagen kawaii */
-            background-size: cover;
-            background-repeat: repeat;
+            background-color: #f8f9fa;
             padding-bottom: 50px;
         }
 
@@ -22,7 +22,7 @@
         }
 
         .producto {
-            background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+            background: white;
             padding: 15px;
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
@@ -55,7 +55,7 @@
         .btn-mas { background-color: #4caf50; color: white; }
 
         .carrito {
-            background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+            background: white;
             padding: 15px;
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
@@ -65,7 +65,7 @@
         }
 
         .metodos-pago {
-            background: rgba(255, 255, 255, 0.8); /* Fondo blanco con transparencia */
+            background: white;
             padding: 15px;
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
@@ -83,7 +83,6 @@
     <script>
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         let precioUnitario = 4.5;
-
         function agregarProducto(id, imagen) {
             let producto = carrito.find(p => p.id === id);
             if (producto) {
@@ -112,18 +111,18 @@
         }
 
         function actualizarCarrito() {
-            let lista = carrito.map(p =>
+            let lista = carrito.map(p => 
                 `<li>
-                    <img src="${p.imagen}" width="80"> x <span class="math-inline">\{p\.cantidad\} 
+                    <img src="${p.imagen}" width="80"> x ${p.cantidad} 
                     <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
                     <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
                 </li>`
             ).join("");
             
-          document.getElementById("listaCarrito").innerHTML = lista;
+            document.getElementById("listaCarrito").innerHTML = lista;
             calcularTotal();
         }
-
+        
         function calcularTotal() {
             let total = carrito.reduce((sum, item) => sum + (item.cantidad * precioUnitario), 0);
             document.getElementById("totalCarrito").textContent = `Total: S/. ${total.toFixed(2)}`;
@@ -132,18 +131,14 @@
         function generarEnlacePedido() {
             let pedidoId = new Date().getTime();
             localStorage.setItem(`pedido_${pedidoId}`, JSON.stringify(carrito));
-
+            
             let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?id=${pedidoId}`;
             let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
             let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
             window.open(whatsappURL, "_blank");
         }
-
-        function mostrarNumerosPago() {
-            alert(`Yape: 960525152\nPlin: 960525152\nBCP: 38096987352082`);
-        }
     </script>
-</head>
+    </head>
 <body>
     <h1>Catálogo de Llaveros</h1>
     <div class="productos">
@@ -176,7 +171,7 @@
                 "https://i.ibb.co/hJBtXX9g/411.png",
                 "https://i.ibb.co/DP4mpTdG/409.png",
                 "https://i.ibb.co/zH71yG9G/408.png",
-                "https://i.ibb.co/7xfY7M2N/407.png",
+                "https://i.ibb.co/0p7DP44hV/407.png",
                 "https://i.ibb.co/1fwDH326/406.png",
                 "https://i.ibb.co/7dwt3BTD/405.png",
                 "https://i.ibb.co/rRKRtSYB/404.png",
