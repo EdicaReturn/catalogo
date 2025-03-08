@@ -63,11 +63,26 @@
             margin: auto;
             text-align: left;
         }
+
+        .metodos-pago {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            width: 400px;
+            margin: auto;
+            text-align: center;
+        }
+
+        .metodos-pago img {
+            width: 300px;
+            height: auto;
+            margin: 10px;
+        }
     </style>
     <script>
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         let precioUnitario = 4.5;
-
         function agregarProducto(id, imagen) {
             let producto = carrito.find(p => p.id === id);
             if (producto) {
@@ -105,6 +120,12 @@
             ).join("");
             
             document.getElementById("listaCarrito").innerHTML = lista;
+            calcularTotal();
+        }
+        
+        function calcularTotal() {
+            let total = carrito.reduce((sum, item) => sum + (item.cantidad * precioUnitario), 0);
+            document.getElementById("totalCarrito").textContent = `Total: S/. ${total.toFixed(2)}`;
         }
 
         function generarEnlacePedido() {
@@ -117,7 +138,7 @@
             window.open(whatsappURL, "_blank");
         }
     </script>
-</head>
+    </head>
 <body>
     <h1>Catálogo de Llaveros</h1>
     <div class="productos">
@@ -127,7 +148,119 @@
                 "https://i.ibb.co/G4g0XCdQ/434.png",
                 "https://i.ibb.co/B5t0Kqgh/433.png",
                 "https://i.ibb.co/ymkNQHVZ/432.png",
-                "https://i.ibb.co/ycwYk8PX/431.png"
+                "https://i.ibb.co/ycwYk8PX/431.png",
+                "https://i.ibb.co/FbgCpbCf/430.png",
+                "https://i.ibb.co/zjhVLTD/429.png",
+                "https://i.ibb.co/9mdZR1b9/428.png",
+                "https://i.ibb.co/9H7WMXKc/427.png",
+                "https://i.ibb.co/7tzHKtpZ/426.png",
+                "https://i.ibb.co/5XGc2C90/425.png",
+                "https://i.ibb.co/S4VWSbKY/424.png",
+                "https://i.ibb.co/b5ygfdqW/423.png",
+                "https://i.ibb.co/39MSs4Rr/422.png",
+                "https://i.ibb.co/S4L2w3zf/421.png",
+                "https://i.ibb.co/CK698m4R/420.png",
+                "https://i.ibb.co/d4F6wvST/419.png",
+                "https://i.ibb.co/8g1nZrnZ/418.png",
+                "https://i.ibb.co/0RDf23kD/417.png",
+                "https://i.ibb.co/CpTkwfHb/416.png",
+                "https://i.ibb.co/tMbLCYvQ/415.png",
+                "https://i.ibb.co/ZRTT5gR3/414.png",
+                "https://i.ibb.co/3LXXVPY/413.png",
+                "https://i.ibb.co/TMCKhNsQ/412.png",
+                "https://i.ibb.co/hJBtXX9g/411.png",
+                "https://i.ibb.co/DP4mpTdG/409.png",
+                "https://i.ibb.co/zH71yG9G/408.png",
+                "https://i.ibb.co/0p7DP44hV/407.png",
+                "https://i.ibb.co/1fwDH326/406.png",
+                "https://i.ibb.co/7dwt3BTD/405.png",
+                "https://i.ibb.co/rRKRtSYB/404.png",
+                "https://i.ibb.co/35Vnrng8/403.png",
+                "https://i.ibb.co/ZRFFhyv9/402.png",
+                "https://i.ibb.co/5hHck4Wt/401.png",
+                "https://i.ibb.co/Ndh5fhvQ/400.png",
+                "https://i.ibb.co/CsYYSM4J/399.png",
+                "https://i.ibb.co/C3d7MFzy/398.png",
+                "https://i.ibb.co/7NbPtbk6/397.png",
+                "https://i.ibb.co/prNxkwvw/396.png",
+                "https://i.ibb.co/yFGQ2FLm/395.png",
+                "https://i.ibb.co/DHnWbThP/394.png",
+                "https://i.ibb.co/CRxvnF0/393.png",
+                "https://i.ibb.co/YTLrgDRW/392.png",
+                "https://i.ibb.co/wNZxjYHj/391.png",
+                "https://i.ibb.co/why8NY9J/390.png",
+                "https://i.ibb.co/wFf6Djt0/389.png",
+                "https://i.ibb.co/PfJ7QDW/388.png",
+                "https://i.ibb.co/qYjYWXMJ/387.png",
+                "https://i.ibb.co/ZRHLsjR7/386.png",
+                "https://i.ibb.co/PGsHyPkz/384.png",
+                "https://i.ibb.co/RGgGJTpL/383.png",
+                "https://i.ibb.co/kFxNWqN/381.png",
+                "https://i.ibb.co/XfspF4tw/380.png",
+                "https://i.ibb.co/TBKzqnZb/378.png",
+                "https://i.ibb.co/xSPtrC0L/377.png",
+                "https://i.ibb.co/nsG7G64J/376.png",
+                "https://i.ibb.co/Z17G76TP/374.png",
+                "https://i.ibb.co/Vppdswcc/373.png",
+                "https://i.ibb.co/bgVVYjFz/372.png",
+                "https://i.ibb.co/vvCKs88R/371.png",
+                "https://i.ibb.co/27WDrbQk/370.png",
+                "https://i.ibb.co/zhSJ2bRy/369.png",
+                "https://i.ibb.co/LDVrq1cy/368.png",
+                "https://i.ibb.co/35hwhz0p/367.png",
+                "https://i.ibb.co/cSQ9CkfQ/365.png",
+                "https://i.ibb.co/ccWWDK3Q/364.png",
+                "https://i.ibb.co/KcYxfvH9/362.png",
+                "https://i.ibb.co/SXCpv1sC/361.png",
+                "https://i.ibb.co/wht5FxHR/359.png",
+                "https://i.ibb.co/fV08Jf3P/358.png",
+                "https://i.ibb.co/GfCdFcTV/357.png",
+                "https://i.ibb.co/67m3wBQd/356.png",
+                "https://i.ibb.co/996Jr1PG/355.png",
+                "https://i.ibb.co/Ps8DJ6Nj/354.png",
+                "https://i.ibb.co/BD6ZP7G/353.png",
+                "https://i.ibb.co/svMc4N5z/351.png",
+                "https://i.ibb.co/ynsrFYKS/350.png",
+                "https://i.ibb.co/SwxSvs1Q/349.png",
+                "https://i.ibb.co/5hq2XymG/348.png",
+                "https://i.ibb.co/VY3Nx1Dk/347.png",
+                "https://i.ibb.co/pvXx1Z72/346.png",
+                "https://i.ibb.co/TDGgRthw/345.png",
+                "https://i.ibb.co/kskJNFxZ/344.png",
+                "https://i.ibb.co/S4dHGrKd/343.png",
+                "https://i.ibb.co/LD8fz5NX/342.png",
+                "https://i.ibb.co/fGQJSTqr/339.png",
+                "https://i.ibb.co/mrmKW5cp/338.png",
+                "https://i.ibb.co/XxRVfbWf/337.png",
+                "https://i.ibb.co/KctQr1kG/335.png",
+                "https://i.ibb.co/JRfJZRmL/334.png",
+                "https://i.ibb.co/Z1JQkyW9/331.png",
+                "https://i.ibb.co/p6Y02Hd4/328.png",
+                "https://i.ibb.co/d49cJThC/327.png",
+                "https://i.ibb.co/svDBQpRw/326.png",
+                "https://i.ibb.co/0pw09ydQ/322.png",
+                "https://i.ibb.co/GX189cW/315.png",
+                "https://i.ibb.co/mrsP3fJg/314.png",
+                "https://i.ibb.co/xtNzT4cs/311.png",
+                "https://i.ibb.co/VW4mJCf2/309.png",
+                "https://i.ibb.co/sdcJxT9s/308.png",
+                "https://i.ibb.co/Kp7rjJjK/306.png",
+                "https://i.ibb.co/4g3QsXv0/301.png",
+                "https://i.ibb.co/jvgVhhBc/288.png",
+                "https://i.ibb.co/WpWtNrfv/285.png",
+                "https://i.ibb.co/yFpLxLVV/273.png",
+                "https://i.ibb.co/4nNd61Q2/266.png",
+                "https://i.ibb.co/p66XvRRx/247.png",
+                "https://i.ibb.co/zhR15hmW/235.png",
+                "https://i.ibb.co/1GnYrNPn/234.png",
+                "https://i.ibb.co/Q7rLzYkL/230.png",
+                "https://i.ibb.co/Swjh9Fxr/229.png",
+                "https://i.ibb.co/S7DsKNWn/190.png",
+                "https://i.ibb.co/Hfbr3LC1/170.png",
+                "https://i.ibb.co/twhTBGc0/160.png",
+                "https://i.ibb.co/38ktXV6/157.png",
+                "https://i.ibb.co/0RrZ18dQ/82.png",
+                "https://i.ibb.co/v41RMTyn/103.png"
             ];
             
             for (let i = 0; i < imagenes.length; i++) {
@@ -144,6 +277,21 @@
             }
         </script>
     </div>
-    <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
+
+    <h2>Carrito de Compras</h2>
+    <div class="carrito">
+        <ul id="listaCarrito"></ul>
+        <p id="totalCarrito"></p>
+        <button onclick="generarEnlacePedido()">Enviar Pedido por WhatsApp</button>
+    </div>
+
+    <h2>Métodos de Pago</h2>
+    <div class="metodos-pago">
+        <p>Escanea el QR o usa los datos:</p>
+        <img src="https://i.ibb.co/VpCJyYTX/Whats-App-Image-2025-03-03-at-8-16-46-AM.jpg" alt="QR Yape">
+        <img src="https://i.ibb.co/4R6YXzzp/Whats-App-Image-2025-03-03-at-8-25-03-AM.jpg" alt="QR Plin">
+        <p><b>BCP:</b> 38096987352082</p>
+        <p><b>Titular:</b> George Edibaldo Gavilan de la Borda</p>
+    </div>
 </body>
 </html>
