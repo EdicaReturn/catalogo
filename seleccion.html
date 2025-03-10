@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleccionar Catálogo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+            padding: 50px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .contenedor {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .categoria {
+            width: 200px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .categoria:hover {
+            transform: scale(1.05);
+        }
+
+        .categoria img {
+            width: 100px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .proximamente {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎀 Bienvenido a Gavisa 🎀</h1>
+    <p>Por favor, selecciona el catálogo que deseas ver:</p>
+
+    <div class="contenedor">
+        <!-- Opción Llaveros 3D -->
+        <div class="categoria" onclick="window.location.href='index.html'">
+            <img src="https://i.ibb.co/qYqKrChC/435.png" alt="Llaveros 3D">
+            <h2>Llaveros 3D</h2>
+        </div>
+
+        <!-- Opción Peluches -->
+        <div class="categoria">
+            <img src="https://i.ibb.co/1GnYrNPn/234.png" alt="Peluches">
+            <h2>Peluches</h2>
+            <p class="proximamente">🔜 Próximamente</p>
+        </div>
+
+        <!-- Opción Tecnología Kawaii -->
+        <div class="categoria">
+            <img src="https://i.ibb.co/ZRTT5gR3/414.png" alt="Tecnología Kawaii">
+            <h2>Tecnología Kawaii</h2>
+            <p class="proximamente">🔜 Próximamente</p>
+        </div>
+    </div>
+
+</body>
+</html>
