@@ -29,13 +29,34 @@
 }
 
 /* Diseño de carrito en columnas */
+.carrito {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    text-align: left;
+}
+
 .carrito ul {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 5 columnas en PC */
+    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
-    padding: 0;
+    padding: 10px;
     list-style: none;
+    background: white;
+    border-radius: 12px;
 }
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .carrito ul {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 
 /* Ajuste para móviles */
 @media (max-width: 768px) {
@@ -72,12 +93,16 @@
         }
 
         .producto {
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-            text-align: center;
-        }
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 130%; /* Aumentado un 30% */
+    max-width: 280px; /* Evita que crezca demasiado */
+    margin: auto;
+}
+
 
         .producto img {
             width: 100%;
@@ -145,16 +170,17 @@
         }
 
         function quitarProducto(id) {
-            let producto = carrito.find(p => p.id === id);
-            if (producto) {
-                producto.cantidad--;
-                if (producto.cantidad === 0) {
-                    carrito = carrito.filter(p => p.id !== id);
-                }
-            }
-            guardarCarrito();
-            actualizarCarrito();
+    let producto = carrito.find(p => p.id === id);
+    if (producto) {
+        producto.cantidad--;
+        if (producto.cantidad <= 0) {
+            carrito = carrito.filter(p => p.id !== id);
         }
+    }
+    guardarCarrito();
+    actualizarCarrito();
+}
+
 
         function guardarCarrito() {
             localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -194,7 +220,6 @@ function mostrarPago() {
 }
 
         function generarEnlacePedido() {
-            function generarEnlacePedido() {
     if (carrito.length === 0) {
         alert("❌ No tienes productos en el carrito.");
         return;
@@ -207,6 +232,7 @@ function mostrarPago() {
     let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
     window.open(whatsappURL, "_blank");
 }
+
 
             let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
             let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
