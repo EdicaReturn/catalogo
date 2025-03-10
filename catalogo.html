@@ -12,10 +12,9 @@
             padding-bottom: 50px;
         }
 
-        /* Diseño de los productos */
         .productos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Tamaño del recuadro aumentado */
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
             gap: 15px;
             max-width: 90%;
             margin: auto;
@@ -28,19 +27,18 @@
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
             text-align: center;
-            width: 110%; /* Aumentado 10% */
+            width: 110%;
             max-width: 300px;
             margin: auto;
         }
 
         .producto img {
             width: 100%;
-            max-width: 200px; /* Aumentado para que crezca proporcionalmente */
+            max-width: 200px;
             height: auto;
             border-radius: 10px;
         }
 
-        /* Botones de agregar y quitar */
         .botones {
             display: flex;
             justify-content: center;
@@ -59,7 +57,6 @@
         .btn-menos { background-color: #ff5252; color: white; }
         .btn-mas { background-color: #4caf50; color: white; }
 
-        /* Diseño del carrito */
         .carrito {
             background: white;
             padding: 20px;
@@ -81,14 +78,12 @@
             border-radius: 12px;
         }
 
-        /* Ajuste para móviles */
         @media (max-width: 768px) {
             .carrito ul {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
 
-        /* Métodos de pago */
         .metodos-pago {
             background: white;
             padding: 15px;
@@ -111,45 +106,29 @@
         let precioUnitario = 4.5;
 
         function agregarProducto(id, imagen) {
-    let producto = carrito.find(p => p.id === id);
-    if (producto) {
-        producto.cantidad++;
-    } else {
-        carrito.push({ id: id, cantidad: 1, imagen: imagen });
-    }
-    guardarCarrito();
-    actualizarCarrito();
-}
-
-
-        function agregarProducto(id, imagen) {
-    id = id.toString(); // Aseguramos que el ID sea una cadena
-
-    let producto = carrito.find(p => p.id === id);
-    if (producto) {
-        producto.cantidad++;
-    } else {
-        carrito.push({ id: id, cantidad: 1, imagen: imagen });
-    }
-    guardarCarrito();
-    actualizarCarrito();
-}
-
-function quitarProducto(id) {
-    id = id.toString(); // Aseguramos que el ID sea una cadena
-
-    let producto = carrito.find(p => p.id === id);
-    if (producto) {
-        producto.cantidad--;
-        if (producto.cantidad <= 0) {
-            carrito = carrito.filter(p => p.id !== id);
+            id = id.toString(); 
+            let producto = carrito.find(p => p.id === id);
+            if (producto) {
+                producto.cantidad++;
+            } else {
+                carrito.push({ id: id, cantidad: 1, imagen: imagen });
+            }
+            guardarCarrito();
+            actualizarCarrito();
         }
-    }
-    guardarCarrito();
-    actualizarCarrito();
-}
 
-
+        function quitarProducto(id) {
+            id = id.toString(); 
+            let producto = carrito.find(p => p.id === id);
+            if (producto) {
+                producto.cantidad--;
+                if (producto.cantidad <= 0) {
+                    carrito = carrito.filter(p => p.id !== id);
+                }
+            }
+            guardarCarrito();
+            actualizarCarrito();
+        }
 
         function guardarCarrito() {
             localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -181,19 +160,18 @@ function quitarProducto(id) {
         }
 
         function generarEnlacePedido() {
-    if (carrito.length === 0) {
-        alert("❌ No tienes productos en el carrito.");
-        return;
-    }
+            if (carrito.length === 0) {
+                alert("❌ No tienes productos en el carrito.");
+                return;
+            }
 
-    let productosEnlace = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
-    let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosEnlace}`;
+            let productosEnlace = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
+            let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosEnlace}`;
 
-    let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
-    let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
-    window.open(whatsappURL, "_blank");
-}
-
+            let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
+            let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
+            window.open(whatsappURL, "_blank");
+        }
     </script>
 </head>
 
@@ -205,8 +183,7 @@ function quitarProducto(id) {
             let imagenes = [
                 "https://i.ibb.co/qYqKrChC/435.png",
                 "https://i.ibb.co/G4g0XCdQ/434.png",
-                "https://i.ibb.co/B5t0Kqgh/433.png",
-                "https://i.ibb.co/ymkNQHVZ/432.png",
+                "https://i.ibb.co/B5t0Kqgh/433.png"
                 "https://i.ibb.co/ycwYk8PX/431.png",
                 "https://i.ibb.co/FbgCpbCf/430.png",
                 "https://i.ibb.co/zjhVLTD/429.png",
@@ -319,7 +296,6 @@ function quitarProducto(id) {
                 "https://i.ibb.co/twhTBGc0/160.png",
                 "https://i.ibb.co/38ktXV6/157.png",
                 "https://i.ibb.co/0RrZ18dQ/82.png",
-                "https://i.ibb.co/v41RMTyn/103.png"
             ];
             
             for (let i = 0; i < imagenes.length; i++) {
