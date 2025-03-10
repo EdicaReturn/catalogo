@@ -13,72 +13,41 @@
         }
 
         h1 {
-            font-size: 24px;
+            font-size: 28px;
             color: #333;
         }
 
         .contenedor {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 30px;
             flex-wrap: wrap;
             margin-top: 30px;
         }
 
         .categoria {
-            width: 200px;
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            width: 400px; /* Doble de tamaño */
+            height: 300px; /* Ajuste proporcional */
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4); /* Fondo llamativo */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
 
         .categoria:hover {
-            transform: scale(1.05);
+            transform: scale(1.1);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
         }
 
         .categoria img {
-            width: 100px;
+            width: 150px; /* Imágenes más grandes */
             height: auto;
             border-radius: 10px;
         }
 
         .proximamente {
             color: red;
-            font-size: 14px;
-            margin-top: 5px;
-        }
-    </style>
-</head>
-<body>
-
-    <h1>🎀 Bienvenido a Gavisa 🎀</h1>
-    <p>Por favor, selecciona el catálogo que deseas ver:</p>
-
-    <div class="contenedor">
-        <!-- Opción Llaveros 3D -->
-        <div class="categoria" onclick="window.location.href='/catalogo/catalogo.html'">
-            <img src="https://i.ibb.co/qYqKrChC/435.png" alt="Llaveros 3D">
-            <h2>Llaveros 3D</h2>
-        </div>
-
-        <!-- Opción Peluches -->
-        <div class="categoria">
-            <img src="https://i.ibb.co/1GnYrNPn/234.png" alt="Peluches">
-            <h2>Peluches</h2>
-            <p class="proximamente">🔜 Próximamente</p>
-        </div>
-
-        <!-- Opción Tecnología Kawaii -->
-        <div class="categoria">
-            <img src="https://i.ibb.co/ZRTT5gR3/414.png" alt="Tecnología Kawaii">
-            <h2>Tecnología Kawaii</h2>
-            <p class="proximamente">🔜 Próximamente</p>
-        </div>
-    </div>
-
-</body>
-</html>
+            font-size: 16px;
