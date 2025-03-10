@@ -27,7 +27,7 @@
 
         .categoria {
             width: 400px; /* Doble de tamaño */
-            height: 300px; /* Ajuste proporcional */
+            height: 320px; /* Ajuste proporcional */
             background: linear-gradient(to bottom, #ff9a9e, #fad0c4); /* Fondo llamativo */
             padding: 30px;
             border-radius: 15px;
@@ -51,3 +51,36 @@
         .proximamente {
             color: red;
             font-size: 16px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎀 Bienvenido a Gavisa 🎀</h1>
+    <p>Por favor, selecciona el catálogo que deseas ver:</p>
+
+    <div class="contenedor">
+        <!-- Opción Llaveros 3D -->
+        <div class="categoria" onclick="window.location.href='/catalogo/catalogo.html'">
+            <img src="https://i.ibb.co/qYqKrChC/435.png" alt="Llaveros 3D">
+            <h2>Llaveros 3D</h2>
+        </div>
+
+        <!-- Opción Peluches -->
+        <div class="categoria">
+            <img src="https://i.ibb.co/YQyt1dB/capibara.jpg" alt="Peluche Capibara">
+            <h2>Peluches</h2>
+            <p class="proximamente">🔜 Próximamente</p>
+        </div>
+
+        <!-- Opción Tecnología Kawaii -->
+        <div class="categoria">
+            <img src="https://i.ibb.co/VBNK4Yj/audifonos.jpg" alt="Audífonos Kawaii">
+            <h2>Tecnología Kawaii</h2>
+            <p class="proximamente">🔜 Próximamente</p>
+        </div>
+    </div>
+
+</body>
+</html>
