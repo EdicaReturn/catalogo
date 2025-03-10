@@ -34,16 +34,19 @@
             text-align: center;
             cursor: pointer;
             transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra el contenido */
         }
 
         .categoria:hover {
             transform: scale(1.05);
         }
 
-        /* 🔥 Contenedor para imágenes con tamaño fijo */
+        /* 🔥 Contenedor de imágenes con tamaño más grande */
         .imagen-contenedor {
-            width: 280px;
-            height: 200px;
+            width: 336px; /* 20% más grande (antes 280px) */
+            height: 240px; /* 20% más grande (antes 200px) */
             overflow: hidden;
             display: flex;
             justify-content: center;
