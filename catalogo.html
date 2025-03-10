@@ -12,9 +12,10 @@
             padding-bottom: 50px;
         }
 
+        /* Diseño de los productos */
         .productos {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
             gap: 15px;
             max-width: 90%;
             margin: auto;
@@ -27,7 +28,6 @@
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
             text-align: center;
-            width: 110%;
             max-width: 300px;
             margin: auto;
         }
@@ -35,10 +35,12 @@
         .producto img {
             width: 100%;
             max-width: 200px;
-            height: auto;
+            height: 180px; /* Tamaño uniforme */
             border-radius: 10px;
+            object-fit: cover; /* Ajusta la imagen dentro del cuadro */
         }
 
+        /* Botones de agregar y quitar */
         .botones {
             display: flex;
             justify-content: center;
@@ -57,6 +59,7 @@
         .btn-menos { background-color: #ff5252; color: white; }
         .btn-mas { background-color: #4caf50; color: white; }
 
+        /* Diseño del carrito */
         .carrito {
             background: white;
             padding: 20px;
@@ -106,7 +109,7 @@
         let precioUnitario = 4.5;
 
         function agregarProducto(id, imagen) {
-            id = id.toString(); 
+            id = id.toString();
             let producto = carrito.find(p => p.id === id);
             if (producto) {
                 producto.cantidad++;
@@ -115,10 +118,11 @@
             }
             guardarCarrito();
             actualizarCarrito();
+            actualizarCantidadProducto(id);
         }
 
         function quitarProducto(id) {
-            id = id.toString(); 
+            id = id.toString();
             let producto = carrito.find(p => p.id === id);
             if (producto) {
                 producto.cantidad--;
@@ -128,6 +132,15 @@
             }
             guardarCarrito();
             actualizarCarrito();
+            actualizarCantidadProducto(id);
+        }
+
+        function actualizarCantidadProducto(id) {
+            let producto = carrito.find(p => p.id === id);
+            let cantidadElemento = document.getElementById(`cantidad-${id}`);
+            if (cantidadElemento) {
+                cantidadElemento.textContent = producto ? producto.cantidad : 0;
+            }
         }
 
         function guardarCarrito() {
@@ -155,20 +168,16 @@
             document.getElementById("totalCarrito").textContent = `Total: S/. ${total.toFixed(2)}`;
         }
 
-        function mostrarPago() {
-            alert("💰 Métodos de Pago:\n\n✅ Yape: 960525152\n✅ Plin: 960525152\n✅ BCP: 38096987352082\n\nTitular: George Edibaldo Gavilan de la Borda");
-        }
-
         function generarEnlacePedido() {
             if (carrito.length === 0) {
                 alert("❌ No tienes productos en el carrito.");
                 return;
             }
 
-            let productosEnlace = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
-            let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosEnlace}`;
+            let productosTexto = carrito.map(p => `🛒 ${p.id} x${p.cantidad}`).join("\n");
+            let total = carrito.reduce((sum, item) => sum + (item.cantidad * precioUnitario), 0);
 
-            let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
+            let mensaje = `Hola, quiero hacer un pedido:\n\n${productosTexto}\n\n💰 *Total a pagar:* S/. ${total.toFixed(2)}`;
             let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
             window.open(whatsappURL, "_blank");
         }
@@ -318,14 +327,7 @@
     <div class="carrito">
         <ul id="listaCarrito"></ul>
         <p id="totalCarrito"></p>
-        <button onclick="mostrarPago()">🛒 Pagar</button>
         <button onclick="generarEnlacePedido()">📩 Enviar Pedido por WhatsApp</button>
-    </div>
-
-    <h2>Métodos de Pago</h2>
-    <div class="metodos-pago">
-        <p>Escanea el QR o usa los datos:</p>
-        <img src="https://i.ibb.co/VpCJyYTX/Whats-App-Image.jpg" alt="QR Yape">
     </div>
 </body>
 </html>
