@@ -6,83 +6,13 @@
     <title>Catálogo de Llaveros</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: linear-gradient(to bottom, #ffdde1, #ee9ca7); /* Fondo kawaii sin imagen */
-    padding-bottom: 50px;
-}
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to bottom, #ffdde1, #ee9ca7);
+            padding-bottom: 50px;
+        }
 
-/* Ajuste del tamaño de imágenes */
-.producto img {
-    width: 120%;
-    max-width: 270px; /* Aumentado un 50% en PC */
-    height: auto;
-    border-radius: 10px;
-}
-
-/* Ajuste para móviles */
-@media (max-width: 768px) {
-    .producto img {
-        width: 120%;
-        max-width: 216px; /* Aumentado un 20% en móviles */
-    }
-}
-
-/* Diseño de carrito en columnas */
-.carrito {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    width: 90%;
-    max-width: 600px;
-    margin: auto;
-    text-align: left;
-}
-
-.carrito ul {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    padding: 10px;
-    list-style: none;
-    background: white;
-    border-radius: 12px;
-}
-
-/* Ajuste para móviles */
-@media (max-width: 768px) {
-    .carrito ul {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-
-/* Ajuste para móviles */
-@media (max-width: 768px) {
-    .carrito ul {
-        grid-template-columns: repeat(2, 1fr); /* 2 columnas en móviles */
-    }
-}
-
-
-/* Ajuste del tamaño de imágenes */
-.producto img {
-    width: 120%;
-    max-width: 270px; /* Aumentado un 50% en PC */
-    height: auto;
-    border-radius: 10px;
-}
-
-/* Ajuste para móviles */
-@media (max-width: 768px) {
-    .producto img {
-        width: 120%;
-        max-width: 216px; /* Aumentado un 20% en móviles */
-    }
-}
-
-
+        /* Diseño de los productos */
         .productos {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -93,16 +23,15 @@
         }
 
         .producto {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    width: 130%; /* Aumentado un 30% */
-    max-width: 280px; /* Evita que crezca demasiado */
-    margin: auto;
-}
-
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            width: 130%;
+            max-width: 280px;
+            margin: auto;
+        }
 
         .producto img {
             width: 100%;
@@ -111,6 +40,7 @@
             border-radius: 10px;
         }
 
+        /* Botones de agregar y quitar */
         .botones {
             display: flex;
             justify-content: center;
@@ -129,16 +59,36 @@
         .btn-menos { background-color: #ff5252; color: white; }
         .btn-mas { background-color: #4caf50; color: white; }
 
+        /* Diseño del carrito */
         .carrito {
             background: white;
-            padding: 15px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-            width: 320px;
+            width: 90%;
+            max-width: 600px;
             margin: auto;
             text-align: left;
         }
 
+        .carrito ul {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            padding: 10px;
+            list-style: none;
+            background: white;
+            border-radius: 12px;
+        }
+
+        /* Ajuste para móviles */
+        @media (max-width: 768px) {
+            .carrito ul {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Métodos de pago */
         .metodos-pago {
             background: white;
             padding: 15px;
@@ -155,95 +105,82 @@
             margin: 10px;
         }
     </style>
+
     <script>
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         let precioUnitario = 4.5;
-        function agregarProducto(id, imagen) {
-    let producto = carrito.find(p => p.id === id);
-    if (producto) {
-        producto.cantidad++;
-    } else {
-        carrito.push({ id: id, cantidad: 1, imagen: imagen });
-    }
-    guardarCarrito();
-    actualizarCarrito();
-}
 
+        function agregarProducto(id, imagen) {
+            let producto = carrito.find(p => p.id === id);
+            if (producto) {
+                producto.cantidad++;
+            } else {
+                carrito.push({ id: id, cantidad: 1, imagen: imagen });
+            }
+            guardarCarrito();
+            actualizarCarrito();
+        }
 
         function quitarProducto(id) {
-    let producto = carrito.find(p => p.id === id);
-    if (producto) {
-        producto.cantidad--;
-        if (producto.cantidad <= 0) {
-            carrito = carrito.filter(p => p.id !== id);
+            let producto = carrito.find(p => p.id === id);
+            if (producto) {
+                producto.cantidad--;
+                if (producto.cantidad <= 0) {
+                    carrito = carrito.filter(p => p.id !== id);
+                }
+            }
+            guardarCarrito();
+            actualizarCarrito();
         }
-    }
-    guardarCarrito();
-    actualizarCarrito();
-}
-
 
         function guardarCarrito() {
             localStorage.setItem('carrito', JSON.stringify(carrito));
         }
 
         function actualizarCarrito() {
-    let lista = carrito.map(p => 
-        `<li>
-            <img src="${p.imagen}" width="80"> x ${p.cantidad} 
-            <div class="botones">
-                <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
-                <span id="cantidad-${p.id}" class="cantidad">${p.cantidad}</span>
-                <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
-            </div>
-        </li>`
-    ).join("");
+            let lista = carrito.map(p => 
+                `<li>
+                    <img src="${p.imagen}" width="80"> x ${p.cantidad} 
+                    <div class="botones">
+                        <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
+                        <span id="cantidad-${p.id}" class="cantidad">${p.cantidad}</span>
+                        <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
+                    </div>
+                </li>`
+            ).join("");
 
-    document.getElementById("listaCarrito").innerHTML = lista;
-    carrito.forEach(p => {
-        let cantidadElemento = document.getElementById(`cantidad-${p.id}`);
-        if (cantidadElemento) {
-            cantidadElemento.textContent = p.cantidad;
+            document.getElementById("listaCarrito").innerHTML = lista;
+            calcularTotal();
         }
-    });
 
-    calcularTotal();
-}
-
-
-        
         function calcularTotal() {
             let total = carrito.reduce((sum, item) => sum + (item.cantidad * precioUnitario), 0);
             document.getElementById("totalCarrito").textContent = `Total: S/. ${total.toFixed(2)}`;
         }
-function mostrarPago() {
-    alert("💰 Métodos de Pago:\n\n✅ Yape: 960525152\n✅ Plin: 960525152\n✅ BCP: 38096987352082\n\nTitular: George Edibaldo Gavilan de la Borda");
-}
+
+        function mostrarPago() {
+            alert("💰 Métodos de Pago:\n\n✅ Yape: 960525152\n✅ Plin: 960525152\n✅ BCP: 38096987352082\n\nTitular: George Edibaldo Gavilan de la Borda");
+        }
 
         function generarEnlacePedido() {
-    if (carrito.length === 0) {
-        alert("❌ No tienes productos en el carrito.");
-        return;
-    }
+            if (carrito.length === 0) {
+                alert("❌ No tienes productos en el carrito.");
+                return;
+            }
 
-    let productosEnlace = carrito.map(p => `${p.id}-${p.cantidad}-${encodeURIComponent(p.imagen)}`).join(",");
-    let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosEnlace}`;
-
-    let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
-    let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
-    window.open(whatsappURL, "_blank");
-}
-
-
+            let productosEnlace = carrito.map(p => `${p.id}-${p.cantidad}-${encodeURIComponent(p.imagen)}`).join(",");
+            let urlPedido = `https://edicareturn.github.io/catalogo/pedido.html?productos=${productosEnlace}`;
 
             let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
             let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
             window.open(whatsappURL, "_blank");
         }
     </script>
-    </head>
+</head>
+
 <body>
     <h1>Catálogo de Llaveros</h1>
+
     <div class="productos">
         <script>
             let imagenes = [
@@ -372,11 +309,10 @@ function mostrarPago() {
                     <div class="producto">
                         <img src="${img}">
                         <div class="botones">
-    <button class="btn-menos" onclick="quitarProducto('${i}')">-</button>
-    <span id="cantidad-${i}" style="margin: 0 10px; font-size: 18px;">0</span>
-    <button class="btn-mas" onclick="agregarProducto('${i}', '${img}')">+</button>
-</div>
-
+                            <button class="btn-menos" onclick="quitarProducto('${i}')">-</button>
+                            <span id="cantidad-${i}" style="margin: 0 10px; font-size: 18px;">0</span>
+                            <button class="btn-mas" onclick="agregarProducto('${i}', '${img}')">+</button>
+                        </div>
                     </div>
                 `);
             }
@@ -384,22 +320,17 @@ function mostrarPago() {
     </div>
 
     <h2>Carrito de Compras</h2>
-<div class="carrito">
-    <ul id="listaCarrito"></ul>
-    <p id="totalCarrito"></p>
-    <button onclick="mostrarPago()">🛒 Pagar</button>
-<button onclick="generarEnlacePedido()">📩 Enviar Pedido por WhatsApp</button>
-
-</div>
-
+    <div class="carrito">
+        <ul id="listaCarrito"></ul>
+        <p id="totalCarrito"></p>
+        <button onclick="mostrarPago()">🛒 Pagar</button>
+        <button onclick="generarEnlacePedido()">📩 Enviar Pedido por WhatsApp</button>
+    </div>
 
     <h2>Métodos de Pago</h2>
     <div class="metodos-pago">
         <p>Escanea el QR o usa los datos:</p>
-        <img src="https://i.ibb.co/VpCJyYTX/Whats-App-Image-2025-03-03-at-8-16-46-AM.jpg" alt="QR Yape">
-        <img src="https://i.ibb.co/4R6YXzzp/Whats-App-Image-2025-03-03-at-8-25-03-AM.jpg" alt="QR Plin">
-        <p><b>BCP:</b> 38096987352082</p>
-        <p><b>Titular:</b> George Edibaldo Gavilan de la Borda</p>
+        <img src="https://i.ibb.co/VpCJyYTX/Whats-App-Image.jpg" alt="QR Yape">
     </div>
 </body>
 </html>
