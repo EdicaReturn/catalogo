@@ -37,17 +37,17 @@
         }
 
         .pedido-container img {
-    width: 180px;
-    height: auto;
-    border-radius: 10px;
-    margin-right: 10px;
-}
-@media (max-width: 600px) {
-    .pedido-container img {
-        width: 150px;
-    }
-}
+            width: 180px;
+            height: auto;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
 
+        @media (max-width: 600px) {
+            .pedido-container img {
+                width: 150px;
+            }
+        }
 
         .mensaje-error {
             color: red;
@@ -71,67 +71,37 @@
 
     <script>
         function obtenerPedidoDesdeURL() {
-    let params = new URLSearchParams(window.location.search);
-    let productosTexto = params.get("productos");
+            let params = new URLSearchParams(window.location.search);
+            let productosTexto = params.get("productos");
 
-    if (!productosTexto || productosTexto.trim() === "") {
-        return [];
-    }
+            if (!productosTexto || productosTexto.trim() === "") {
+                return [];
+            }
 
-    return productosTexto.split(",").map(p => {
-        let partes = p.split("-");
-        return {
-            id: partes[0],
-            cantidad: parseInt(partes[1]) || 0,
-            imagen: decodeURIComponent(partes[2] || "")
-        };
-    }).filter(p => p.cantidad > 0);
-}
-
-
+            return productosTexto.split(",").map(p => {
+                let partes = p.split("-");
+                return {
+                    id: partes[0],
+                    cantidad: parseInt(partes[1]) || 0
+                };
+            }).filter(p => p.cantidad > 0);
+        }
 
         function cargarPedido() {
-    let pedido = obtenerPedidoDesdeURL();
+            let pedido = obtenerPedidoDesdeURL();
 
-    if (!pedido || pedido.length === 0) {
-        document.getElementById("listaPedido").innerHTML = "<p class='mensaje-error'>❌ No hay productos en este pedido.</p>";
-        return;
-    }
-
-    let total = pedido.reduce((sum, p) => sum + (p.cantidad * 4.5), 0);
-    let listaHTML = pedido.map(p => `
-        <li>
-            <img src="${p.imagen}">
-            ${p.cantidad} unidades
-        </li>
-    `).join("");
-
-    document.getElementById("listaPedido").innerHTML = listaHTML;
-    document.getElementById("totalPedido").innerText = `Total a pagar: S/ ${total.toFixed(2)}`;
-}
-
-
-if (!pedido) {
-    document.getElementById("listaPedido").innerHTML = "<p class='mensaje-error'>❌ No hay productos en este pedido.</p>";
-    return;
-}
-
-pedido = JSON.parse(pedido);
-
-if (pedido.length === 0) {
-    document.getElementById("listaPedido").innerHTML = "<p class='mensaje-error'>❌ No hay productos en este pedido.</p>";
-    return;
-}
-
+            if (!pedido || pedido.length === 0) {
+                document.getElementById("listaPedido").innerHTML = "<p class='mensaje-error'>❌ No hay productos en este pedido.</p>";
+                return;
+            }
 
             let total = pedido.reduce((sum, p) => sum + (p.cantidad * 4.5), 0);
-let listaHTML = pedido.map(p => `
-    <li>
-        <img src="${p.imagen}">
-        ${p.cantidad} unidades
-    </li>
-`).join("");
-
+            let listaHTML = pedido.map(p => `
+                <li>
+                    <img src="https://edicareturn.github.io/catalogo/imagenes/${p.id}.png" width="80">
+                    ${p.cantidad} unidades
+                </li>
+            `).join("");
 
             document.getElementById("listaPedido").innerHTML = listaHTML;
             document.getElementById("totalPedido").innerText = `Total a pagar: S/ ${total.toFixed(2)}`;
