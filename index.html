@@ -27,7 +27,7 @@
 
         .categoria {
             width: 400px; /* Tamaño del cuadro */
-            background: linear-gradient(to bottom, #fbc2eb, #a6c1ee); /* Restaurado el fondo pastel */
+            background: linear-gradient(to bottom, #fbc2eb, #a6c1ee); /* Fondo pastel */
             padding: 20px;
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
@@ -40,10 +40,21 @@
             transform: scale(1.05);
         }
 
-        .categoria img {
-            width: 280px; /* 40% más grande */
-            height: auto;
+        /* 🔥 Contenedor para imágenes con tamaño fijo */
+        .imagen-contenedor {
+            width: 280px;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             border-radius: 10px;
+        }
+
+        .categoria img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajusta el tamaño sin deformar */
         }
 
         .proximamente {
@@ -61,20 +72,26 @@
     <div class="contenedor">
         <!-- Opción Llaveros 3D -->
         <div class="categoria" onclick="window.location.href='/catalogo/catalogo.html'">
-            <img src="https://i.ibb.co/qYqKrChC/435.png" alt="Llaveros 3D">
+            <div class="imagen-contenedor">
+                <img src="https://i.ibb.co/qYqKrChC/435.png" alt="Llaveros 3D">
+            </div>
             <h2>Llaveros 3D</h2>
         </div>
 
         <!-- Opción Peluches (Capibara) -->
         <div class="categoria">
-            <img src="https://i.ibb.co/KcN7TZXv/capibara.jpg" alt="Peluches Capibara">
+            <div class="imagen-contenedor">
+                <img src="https://i.ibb.co/KcN7TZXv/capibara.jpg" alt="Peluches Capibara">
+            </div>
             <h2>Peluches</h2>
             <p class="proximamente">🔜 Próximamente</p>
         </div>
 
         <!-- Opción Tecnología Kawaii (Audífonos) -->
         <div class="categoria">
-            <img src="https://i.ibb.co/SwM28pZ8/DWBMPBMFBZANXLS3-V6-BVKBJ5-UA.jpg" alt="Tecnología Kawaii">
+            <div class="imagen-contenedor">
+                <img src="https://i.ibb.co/SwM28pZ8/DWBMPBMFBZANXLS3-V6-BVKBJ5-UA.jpg" alt="Tecnología Kawaii">
+            </div>
             <h2>Tecnología Kawaii</h2>
             <p class="proximamente">🔜 Próximamente</p>
         </div>
