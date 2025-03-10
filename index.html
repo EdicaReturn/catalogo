@@ -159,15 +159,16 @@
         let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
         let precioUnitario = 4.5;
         function agregarProducto(id, imagen) {
-            let producto = carrito.find(p => p.id === id);
-            if (producto) {
-                producto.cantidad++;
-            } else {
-                carrito.push({ id, cantidad: 1, imagen });
-            }
-            guardarCarrito();
-            actualizarCarrito();
-        }
+    let producto = carrito.find(p => p.id === id);
+    if (producto) {
+        producto.cantidad++;
+    } else {
+        carrito.push({ id: id, cantidad: 1, imagen: imagen });
+    }
+    guardarCarrito();
+    actualizarCarrito();
+}
+
 
         function quitarProducto(id) {
     let producto = carrito.find(p => p.id === id);
@@ -232,6 +233,7 @@ function mostrarPago() {
     let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
     window.open(whatsappURL, "_blank");
 }
+
 
 
             let mensaje = `Hola, quiero hacer un pedido. Puedes verlo aquí: ${urlPedido}`;
