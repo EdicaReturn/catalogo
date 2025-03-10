@@ -37,7 +37,7 @@
         }
 
         .pedido-container img {
-            width: 180px;
+            width: 80px;
             height: auto;
             border-radius: 10px;
             margin-right: 10px;
@@ -45,7 +45,7 @@
 
         @media (max-width: 600px) {
             .pedido-container img {
-                width: 150px;
+                width: 60px;
             }
         }
 
@@ -98,7 +98,7 @@
             let total = pedido.reduce((sum, p) => sum + (p.cantidad * 4.5), 0);
             let listaHTML = pedido.map(p => `
                 <li>
-                    <img src="https://edicareturn.github.io/catalogo/imagenes/${p.id}.png" width="80">
+                    <img src="https://i.ibb.co/${p.id}.png">
                     ${p.cantidad} unidades
                 </li>
             `).join("");
