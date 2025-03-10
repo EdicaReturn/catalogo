@@ -35,9 +35,9 @@
         .producto img {
             width: 100%;
             max-width: 200px;
-            height: 180px; /* Tamaño uniforme */
+            height: 180px;
             border-radius: 10px;
-            object-fit: cover; /* Ajusta la imagen dentro del cuadro */
+            object-fit: cover;
         }
 
         /* Botones de agregar y quitar */
@@ -156,7 +156,7 @@
                         <span id="cantidad-${p.id}" class="cantidad">${p.cantidad}</span>
                         <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
                     </div>
-                </li>`
+                </li>` 
             ).join("");
 
             document.getElementById("listaCarrito").innerHTML = lista;
@@ -187,13 +187,20 @@
 <body>
     <h1>Catálogo de Llaveros</h1>
 
-    <div class="productos">
-        <script>
-            let imagenes = [
-                "https://i.ibb.co/qYqKrChC/435.png",
-                "https://i.ibb.co/G4g0XCdQ/434.png",
-                "https://i.ibb.co/B5t0Kqgh/433.png",
-                "https://i.ibb.co/ycwYk8PX/431.png",
+    <div class="productos" id="productos"></div>
+
+    <div class="carrito">
+        <h2>🛍️ Mi Carrito</h2>
+        <ul id="listaCarrito"></ul>
+        <h3 id="totalCarrito">Total: S/. 0.00</h3>
+        <button onclick="generarEnlacePedido()">🛒 Finalizar Pedido</button>
+    </div>
+
+    <script>
+        let imagenes = [
+            "https://i.ibb.co/qYqKrChC/435.png",
+            "https://i.ibb.co/G4g0XCdQ/434.png",
+            "https://i.ibb.co/B5t0Kqgh/433.png""https://i.ibb.co/ycwYk8PX/431.png",
                 "https://i.ibb.co/FbgCpbCf/430.png",
                 "https://i.ibb.co/zjhVLTD/429.png",
                 "https://i.ibb.co/9mdZR1b9/428.png",
@@ -305,29 +312,27 @@
                 "https://i.ibb.co/twhTBGc0/160.png",
                 "https://i.ibb.co/38ktXV6/157.png",
                 "https://i.ibb.co/0RrZ18dQ/82.png",
-            ];
-            
-            for (let i = 0; i < imagenes.length; i++) {
-                let img = imagenes[i];
-                document.write(`
-                    <div class="producto">
-                        <img src="${img}">
-                        <div class="botones">
-                            <button class="btn-menos" onclick="quitarProducto('${i}')">-</button>
-                            <span id="cantidad-${i}" style="margin: 0 10px; font-size: 18px;">0</span>
-                            <button class="btn-mas" onclick="agregarProducto('${i}', '${img}')">+</button>
-                        </div>
-                    </div>
-                `);
-            }
-        </script>
-    </div>
+                "https://i.ibb.co/v41RMTyn/103.png"
+        ];
 
-    <h2>Carrito de Compras</h2>
-    <div class="carrito">
-        <ul id="listaCarrito"></ul>
-        <p id="totalCarrito"></p>
-        <button onclick="generarEnlacePedido()">📩 Enviar Pedido por WhatsApp</button>
-    </div>
+        let contenedor = document.getElementById("productos");
+
+        imagenes.forEach((imagen, index) => {
+            let div = document.createElement("div");
+            div.className = "producto";
+            div.innerHTML = `
+                <img src="${imagen}">
+                <h3>Llaverito ${index + 1}</h3>
+                <div class="botones">
+                    <button class="btn-menos" onclick="quitarProducto(${index})">-</button>
+                    <span id="cantidad-${index}" class="cantidad">0</span>
+                    <button class="btn-mas" onclick="agregarProducto(${index}, '${imagen}')">+</button>
+                </div>
+            `;
+            contenedor.appendChild(div);
+        });
+
+        actualizarCarrito();
+    </script>
 </body>
 </html>
