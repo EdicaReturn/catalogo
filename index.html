@@ -122,17 +122,33 @@
 }
 
 
-        function quitarProducto(id) {
+        function agregarProducto(id, imagen) {
+    id = id.toString(); // Aseguramos que el ID sea una cadena
+
+    let producto = carrito.find(p => p.id === id);
+    if (producto) {
+        producto.cantidad++;
+    } else {
+        carrito.push({ id: id, cantidad: 1, imagen: imagen });
+    }
+    guardarCarrito();
+    actualizarCarrito();
+}
+
+function quitarProducto(id) {
+    id = id.toString(); // Aseguramos que el ID sea una cadena
+
     let producto = carrito.find(p => p.id === id);
     if (producto) {
         producto.cantidad--;
-        if (producto.cantidad <= 0) { // Corregido para que realmente lo elimine si es 0
+        if (producto.cantidad <= 0) {
             carrito = carrito.filter(p => p.id !== id);
         }
     }
     guardarCarrito();
     actualizarCarrito();
 }
+
 
 
         function guardarCarrito() {
