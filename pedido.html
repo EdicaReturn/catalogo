@@ -119,20 +119,19 @@
     }
 
     let total = pedido.reduce((sum, p) => sum + (p.cantidad * 4.5), 0);
-    
-    let listaHTML = pedido.map(p => {
-    // Intentamos obtener la URL de la imagen desde localStorage
-    let carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
-    let producto = carritoGuardado.find(prod => prod.id === p.id);
-    let imagen = producto ? producto.imagen : "https://i.ibb.co/placeholder.png"; // Imagen de respaldo si no encuentra la original
 
-    return `
-        <li>
-            <img src="${imagen}" width="80">
-            ${p.cantidad} unidades
-        </li>
-    `;
-}).join("");
+    let listaHTML = pedido.map(p => {
+        let carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
+        let producto = carritoGuardado.find(prod => prod.id === p.id);
+        let imagen = producto ? producto.imagen : "https://i.ibb.co/placeholder.png";
+
+        return `
+            <li>
+                <img src="${imagen}" width="80">
+                ${p.cantidad} unidades
+            </li>
+        `;
+    }).join("");
 
     document.getElementById("listaPedido").innerHTML = listaHTML;
     document.getElementById("totalPedido").innerText = `Total a pagar: S/ ${total.toFixed(2)}`;
