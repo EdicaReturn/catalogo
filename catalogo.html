@@ -175,19 +175,19 @@
     }
 
     // Crear un array con los detalles de cada producto para la URL
-    let productosParaURL = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
+    let productosParaURL = carrito.map(p => `<span class="math-inline">\{String\(p\.id\)\}\-</span>{p.cantidad}`).join(",");
+
+    // Comprimir los datos del pedido
+    let productosComprimidos = LZString.compressToEncodedURIComponent(productosParaURL);
 
     // Construir la URL con los parámetros necesarios
-    let urlPedido = `pedido.html?productos=${encodeURIComponent(productosParaURL)}`;
+    let urlPedido = `pedido.html?productos=${productosComprimidos}`;
 
     // Construir el mensaje de WhatsApp con el URL del pedido
     let mensaje = `Hola, quiero hacer un pedido: https://EdicaReturn.github.io/catalogo/${urlPedido}`;
 
     // Construir el URL de WhatsApp
     let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
-
-    // Agregar console.log para verificar la URL
-    console.log(whatsappURL);
 
     // Abrir WhatsApp en una nueva pestaña
     window.open(whatsappURL, "_blank");
@@ -328,6 +328,7 @@
             actualizarCarrito();
         });
     </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
 </head>
 
 <body>
