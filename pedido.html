@@ -121,29 +121,24 @@
     let total = pedido.reduce((sum, p) => sum + (p.cantidad * 4.5), 0);
 
     let listaHTML = pedido.map(p => {
-    let carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
-    let producto = carritoGuardado.find(prod => prod.id === p.id);
-    let imagen = producto ? producto.imagen : "https://i.ibb.co/placeholder.png";
+        let carritoGuardado = JSON.parse(localStorage.getItem('carrito')) || [];
+        let producto = carritoGuardado.find(prod => prod.id === p.id);
+        let imagen = producto ? producto.imagen : "https://i.ibb.co/placeholder.png";
 
-    console.log("Producto:", producto);
-    console.log("Imagen:", imagen);
+        console.log("Producto:", producto);
+        console.log("Imagen:", imagen);
 
-    return `
-        <li>
-            <img src="${imagen}" width="80">
-            ${p.cantidad} unidades
-        </li>
-    `;
-}).join("");
+        return `
+            <li>
+                <img src="${imagen}" width="80">
+                ${p.cantidad} unidades
+            </li>
+        `;
+    }).join("");
 
     document.getElementById("listaPedido").innerHTML = listaHTML;
     document.getElementById("totalPedido").innerText = `Total a pagar: S/ ${total.toFixed(2)}`;
 }
-
-
-            document.getElementById("listaPedido").innerHTML = listaHTML;
-            document.getElementById("totalPedido").innerText = `Total a pagar: S/ ${total.toFixed(2)}`;
-        }
 
         window.onload = cargarPedido;
     </script>
