@@ -181,10 +181,13 @@
     let urlPedido = `pedido.html?productos=${encodeURIComponent(productosParaURL)}`;
 
     // Construir el mensaje de WhatsApp con el URL del pedido
-    // Reemplaza 'tu-usuario' y 'tu-repositorio' con tus datos reales de GitHub let mensaje = `Hola, quiero hacer un pedido: https://EdicaReturn.github.io/catalogo/${urlPedido}`;
+    let mensaje = `Hola, quiero hacer un pedido: https://EdicaReturn.github.io/catalogo/${urlPedido}`;
 
     // Construir el URL de WhatsApp
     let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
+
+    // Agregar console.log para verificar la URL
+    console.log(whatsappURL);
 
     // Abrir WhatsApp en una nueva pestaña
     window.open(whatsappURL, "_blank");
