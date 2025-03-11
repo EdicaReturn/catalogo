@@ -70,9 +70,11 @@
     </div>
 
     <script>
-        function obtenerPedidoDesdeURL() {
+       function obtenerPedidoDesdeURL() {
     let params = new URLSearchParams(window.location.search);
     let productosComprimidos = params.get("productos");
+
+    console.log("Productos Comprimidos:", productosComprimidos); // Verifica los datos comprimidos
 
     if (!productosComprimidos) {
         return [];
@@ -80,17 +82,23 @@
 
     let productosTexto = LZString.decompressFromEncodedURIComponent(productosComprimidos);
 
+    console.log("Productos Texto:", productosTexto); // Verifica los datos descomprimidos
+
     if (!productosTexto || productosTexto.trim() === "") {
         return [];
     }
 
-    return productosTexto.split(",").map(p => {
+    let pedido = productosTexto.split(",").map(p => {
         let partes = p.split("-");
         return {
             id: partes[0],
             cantidad: parseInt(partes[1]) || 0
         };
     }).filter(p => p.cantidad > 0);
+
+    console.log("Pedido:", pedido); // Verifica el pedido final
+
+    return pedido;
 }
 
         function cargarPedido() {
