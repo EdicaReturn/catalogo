@@ -169,18 +169,20 @@
         }
 
         function generarEnlacePedido() {
-            if (carrito.length === 0) {
-                alert("❌ No tienes productos en el carrito.");
-                return;
-            }
+    if (carrito.length === 0) {
+        alert("❌ No tienes productos en el carrito.");
+        return;
+    }
 
-            let productosTexto = carrito.map(p => `🛒 ${p.id} x${p.cantidad}`).join("\n");
-            let total = carrito.reduce((sum, item) => sum + (item.cantidad * precioUnitario), 0);
+    // Crear un array con los detalles de cada producto para la URL
+    let productosParaURL = carrito.map(p => `${p.id}-${p.cantidad}`).join(",");
 
-            let mensaje = `Hola, quiero hacer un pedido:\n\n${productosTexto}\n\n💰 *Total a pagar:* S/. ${total.toFixed(2)}`;
-            let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
-            window.open(whatsappURL, "_blank");
-        }
+    // Construir la URL con los parámetros necesarios
+    let urlPedido = `pedido.html?productos=${encodeURIComponent(productosParaURL)}`;
+
+    // Redirigir a la página de pedido
+    window.location.href = urlPedido;
+}
 
         document.addEventListener("DOMContentLoaded", function() {
             let imagenes = [
