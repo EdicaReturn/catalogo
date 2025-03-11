@@ -102,15 +102,6 @@
 }
 
         function cargarPedido() {
-            let pedido = obtenerPedidoDesdeURL();
-
-            if (!pedido || pedido.length === 0) {
-                document.getElementById("listaPedido").innerHTML = "<p class='mensaje-error'>❌ No hay productos en este pedido.</p>";
-                return;
-            }
-
-            let total = pedido.reduce((sum, p) => sum + (p.cantidad * 4.5), 0);
-            function cargarPedido() {
     let pedido = obtenerPedidoDesdeURL();
 
     if (!pedido || pedido.length === 0) {
