@@ -180,8 +180,14 @@
     // Construir la URL con los parámetros necesarios
     let urlPedido = `pedido.html?productos=${encodeURIComponent(productosParaURL)}`;
 
-    // Redirigir a la página de pedido
-    window.location.href = urlPedido;
+    // Construir el mensaje de WhatsApp con el URL del pedido
+    let mensaje = `Hola, quiero hacer un pedido: ${window.location.origin}/${urlPedido}`;
+
+    // Construir el URL de WhatsApp
+    let whatsappURL = `https://wa.me/51960525152?text=${encodeURIComponent(mensaje)}`;
+
+    // Abrir WhatsApp en una nueva pestaña
+    window.open(whatsappURL, "_blank");
 }
 
         document.addEventListener("DOMContentLoaded", function() {
