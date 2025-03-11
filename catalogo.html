@@ -175,7 +175,7 @@
     }
 
     // Crear un array con los detalles de cada producto para la URL
-    let productosParaURL = carrito.map(p => `<span class="math-inline">\{String\(p\.id\)\}\-</span>{p.cantidad}`).join(",");
+    let productosParaURL = carrito.map(p => `${String(p.id)}-${p.cantidad}`).join(",");
 
     // Comprimir los datos del pedido
     let productosComprimidos = LZString.compressToEncodedURIComponent(productosParaURL);
