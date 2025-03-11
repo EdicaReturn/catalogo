@@ -71,21 +71,27 @@
 
     <script>
         function obtenerPedidoDesdeURL() {
-            let params = new URLSearchParams(window.location.search);
-            let productosTexto = params.get("productos");
+    let params = new URLSearchParams(window.location.search);
+    let productosComprimidos = params.get("productos");
 
-            if (!productosTexto || productosTexto.trim() === "") {
-                return [];
-            }
+    if (!productosComprimidos) {
+        return [];
+    }
 
-            return productosTexto.split(",").map(p => {
-                let partes = p.split("-");
-                return {
-                    id: partes[0],
-                    cantidad: parseInt(partes[1]) || 0
-                };
-            }).filter(p => p.cantidad > 0);
-        }
+    let productosTexto = LZString.decompressFromEncodedURIComponent(productosComprimidos);
+
+    if (!productosTexto || productosTexto.trim() === "") {
+        return [];
+    }
+
+    return productosTexto.split(",").map(p => {
+        let partes = p.split("-");
+        return {
+            id: partes[0],
+            cantidad: parseInt(partes[1]) || 0
+        };
+    }).filter(p => p.cantidad > 0);
+}
 
         function cargarPedido() {
             let pedido = obtenerPedidoDesdeURL();
