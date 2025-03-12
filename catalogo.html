@@ -328,15 +328,15 @@
             ];
 
 let productosHTML = llaveros.map((llavero, index) => `
-        <div class="producto">
-            <img src="${llavero.url}" alt="Llavero ${llavero.id}">
-            <div class="botones">
-                <button class="btn-menos" onclick="quitarProducto('${llavero.id}')">-</button>
-                <span id="cantidad-${llavero.id}" class="cantidad">0</span>
-                <button class="btn-mas" onclick="agregarProducto('${llavero.id}', '${llavero.url}')">+</button>
-            </div>
+    <div class="producto">
+        <img src="${llavero.url}" alt="Llavero ${llavero.id}">
+        <p>ID: ${llavero.id}</p>  <div class="botones">
+            <button class="btn-menos" onclick="quitarProducto('${llavero.id}')">-</button>
+            <span id="cantidad-${llavero.id}" class="cantidad">0</span>
+            <button class="btn-mas" onclick="agregarProducto('${llavero.id}', '${llavero.url}')">+</button>
         </div>
-    `);
+    </div>
+`);
 
     document.getElementById("productos").innerHTML = productosHTML;
     actualizarCarrito();
