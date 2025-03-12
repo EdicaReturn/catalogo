@@ -14,31 +14,31 @@
 
         /* Diseño de los productos */
         .productos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); 
-            gap: 15px;
-            max-width: 90%;
-            margin: auto;
-            padding: 20px;
-        }
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Aumentamos el minmax */
+    gap: 10px; /* Reducimos el gap */
+    max-width: 95%; /* Aumentamos el max-width */
+    margin: auto;
+    padding: 20px;
+}
 
-        .producto {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
-            text-align: center;
-            max-width: 300px;
-            margin: auto;
-        }
+.producto {
+    background: white;
+    padding: 15px; /* Reducimos el padding */
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    max-width: 250px; /* Reducimos el max-width */
+    margin: auto;
+}
 
-        .producto img {
-            width: 100%;
-            max-width: 200px;
-            height: 180px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
+.producto img {
+    width: 100%;
+    max-width: 150px; /* Reducimos el max-width de la imagen */
+    height: 150px; /* Reducimos la altura de la imagen */
+    border-radius: 10px;
+    object-fit: cover;
+}
 
         /* Botones de agregar y quitar */
         .botones {
@@ -169,20 +169,20 @@
         }
 
         function actualizarCarrito() {
-            let lista = carrito.map(p => 
-                `<li>
-                    <img src="${p.imagen}" width="80"> x ${p.cantidad} 
-                    <div class="botones">
-                        <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
-                        <span id="cantidad-${p.id}" class="cantidad">${p.cantidad}</span>
-                        <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
-                    </div>
-                </li>` 
-            ).join("");
+    let lista = carrito.map(p =>
+        `<li>
+            <img src="${p.imagen}" width="80"> ${p.id} x ${p.cantidad} 
+            <div class="botones">
+                <button class="btn-menos" onclick="quitarProducto('${p.id}')">-</button>
+                <span id="cantidad-${p.id}" class="cantidad">${p.cantidad}</span>
+                <button class="btn-mas" onclick="agregarProducto('${p.id}', '${p.imagen}')">+</button>
+            </div>
+        </li>`
+    ).join("");
 
-            document.getElementById("listaCarrito").innerHTML = lista;
-            calcularTotal();
-        }
+    document.getElementById("listaCarrito").innerHTML = lista;
+    calcularTotal();
+}
 
         function calcularTotal() {
             let total = carrito.reduce((sum, item) => sum + (item.cantidad * precioUnitario), 0);
