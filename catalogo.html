@@ -102,6 +102,27 @@
             height: auto;
             margin: 10px;
         }
+        .titulo-catalogo h1 {
+    font-size: 2.5em;
+    margin-bottom: 5px;
+}
+
+.titulo-catalogo p {
+    font-size: 1.1em;
+    color: #888;
+}
+
+.advertencia-actualizacion {
+    font-size: 0.9em;
+    color: #f00;
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .productos {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
     </style>
 
     <script>
@@ -332,7 +353,7 @@
 </head>
 
 <body>
-    <div class="titulo-catalogo">     <h1>Catálogo de Llaveros por mayor</h1>     <p>(Ventas a partir de 100 unidades)</p> </div> <p>Última actualización: 12/03/2025</p> <p class="advertencia-actualizacion">     * El catálogo podría no estar completamente actualizado. Algunos productos podrían estar agotándose. </p>
+    <div class="titulo-catalogo">     <h1>Catálogo de Llaveros por mayor</h1>     <p>(Ventas a partir de 100 unidades)</p> </div> <p>Última actualización: 12/03/2025</p> <p class="advertencia-actualizacion">     * Envio GRATIS a partir de 100 unidades. </p>
 
     <div class="productos" id="productos"></div>
 
